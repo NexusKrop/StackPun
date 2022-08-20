@@ -1,0 +1,4 @@
+name: StackPun
+description: New Stack
+version: 0.1.0-alpha
+main: io.github.nexuskrop.stackpun.StackPun

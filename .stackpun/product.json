@@ -1,0 +1,9 @@
+{
+  "version": "0.1.0-alpha",
+  "mainClass": "io.github.nexuskrop.stackpun.StackPun",
+  "pluginName": "StackPun",
+  "pluginDescription": "For the Stack",
+  "resourcesDir": "src/main/resources",
+  "mcVersion": "1.19",
+  "logPrefix": "StaP"
+}
