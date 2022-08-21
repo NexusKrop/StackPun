@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022.
+ * This file is part of StackPun.
+ * Licensed under GNU AGPL version 3 or later.
+ */
+
 package io.github.nexuskrop.stackpun.players;
 
 import io.github.nexuskrop.stackpun.StackPun;
