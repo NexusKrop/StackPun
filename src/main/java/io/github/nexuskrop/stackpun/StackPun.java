@@ -1,6 +1,7 @@
 package io.github.nexuskrop.stackpun;
 
 import io.github.nexuskrop.stackpun.frontend.CommandManager;
+import io.github.nexuskrop.stackpun.players.ChatManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -12,6 +13,7 @@ public class StackPun extends JavaPlugin {
     private static StackPun _instance;
 
     private CommandManager commandManager;
+    private ChatManager chatManager;
 
     private void setInstance(StackPun instance) {
         _instance = instance;
@@ -35,5 +37,6 @@ public class StackPun extends JavaPlugin {
         getSLF4JLogger().info("StackPun Service instantiated");
 
         commandManager = new CommandManager();
+        chatManager = new ChatManager(this);
     }
 }
