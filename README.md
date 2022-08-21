@@ -4,6 +4,4 @@
 
 ## 构建
 
-```shell
-./gradlew build
-```
+请见[构建指南](BUILDING.md)
