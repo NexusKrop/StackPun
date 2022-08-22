@@ -1,6 +1,11 @@
+/*
+ * Copyright (c) 2022.
+ * This file is part of StackPun.
+ * Licensed under GNU AGPL version 3 or later.
+ */
+
 /**
- * This is the main package for the frontend and the gameplay service, aka StackPun Service. The
- * backend is the StackPun Platform which provides non-gameplay service for the StackPun Service.
+ * This is the main package of the StackPun plugin, where the entry point resides.
  *
  * @author withlithum
  */
