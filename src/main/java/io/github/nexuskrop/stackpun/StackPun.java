@@ -8,6 +8,9 @@ package io.github.nexuskrop.stackpun;
 
 import io.github.nexuskrop.stackpun.data.ProfileManager;
 import io.github.nexuskrop.stackpun.frontend.CommandManager;
+import io.github.nexuskrop.stackpun.frontend.commands.BlipCommand;
+import io.github.nexuskrop.stackpun.frontend.commands.MuteCommand;
+import io.github.nexuskrop.stackpun.frontend.commands.UnmuteCommand;
 import io.github.nexuskrop.stackpun.players.ChatManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -50,10 +53,20 @@ public class StackPun extends JavaPlugin {
         setInstance(this);
         getSLF4JLogger().info("StackPun Service instantiated");
 
-        commandManager = new CommandManager();
         chatManager = new ChatManager(this);
+
         profileManager = new ProfileManager(this);
         profileManager.init();
+
+        commandManager = new CommandManager();
+        // TODO: 反射解析自动注册
+        initCommands();
+    }
+
+    public void initCommands() {
+        commandManager.registerCommand(new BlipCommand());
+        commandManager.registerCommand(new UnmuteCommand());
+        commandManager.registerCommand(new MuteCommand());
     }
 
     @Override
