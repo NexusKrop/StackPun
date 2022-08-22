@@ -35,6 +35,7 @@ public class UnmuteCommand implements StackCommand {
         } else {
             profile.muted = false;
             StackPun.instance().profileManager().putProfile(player, profile);
+            sender.sendMessage(Component.text("Unmuted ").append(player.displayName()));
         }
     }
 }

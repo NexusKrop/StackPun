@@ -36,6 +36,7 @@ public class MuteCommand implements StackCommand {
         } else {
             profile.muted = true;
             StackPun.instance().profileManager().putProfile(player, profile);
+            sender.sendMessage(Component.text("Muted ").append(player.displayName()));
         }
     }
 }
