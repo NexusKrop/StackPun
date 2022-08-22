@@ -21,7 +21,7 @@ import org.bukkit.event.Listener;
 
 public final class ChatManager implements Listener {
     private final StackPun plugin;
-    private final String chatFormat = "<dark_gray>[<dim>]</dark_gray> [<playerName>] <gray><message>";
+    private final String chatFormat = "<dark_gray>[<dim>]</dark_gray> [<player_name>] <gray><message>";
     private final LegacyComponentSerializer serializer = LegacyComponentSerializer
             .legacy(ChatColor.COLOR_CHAR);
 
@@ -43,7 +43,7 @@ public final class ChatManager implements Listener {
 
         var comp = MiniMessage.miniMessage().deserialize(chatFormat,
                 Placeholder.unparsed("dim", Common.getEntityDimText(event.getPlayer())),
-                Placeholder.component("playerName", player.displayName()),
+                Placeholder.component("player_name", player.displayName()),
                 Placeholder.component("message", event.message()));
 
         plugin.getServer().getLogger().info(serializer.serialize(comp));
