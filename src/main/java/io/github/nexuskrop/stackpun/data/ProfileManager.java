@@ -50,6 +50,11 @@ public final class ProfileManager {
      * Initialises this instance. If existing profiles file is on disk, attempt to read it.
      */
     public void init() {
+        if (!plugin.getDataFolder().exists() && !plugin.getDataFolder().mkdir()) {
+            plugin.getSLF4JLogger().error("Failed to create data folder.");
+            prohibitWrite = true;
+        }
+
         profileFile = new File(plugin.getDataFolder(), profileSet);
 
         if (profileFile.exists()) {
