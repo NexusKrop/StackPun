@@ -10,6 +10,7 @@ import io.github.nexuskrop.stackpun.data.ProfileManager;
 import io.github.nexuskrop.stackpun.frontend.CommandManager;
 import io.github.nexuskrop.stackpun.frontend.commands.BlipCommand;
 import io.github.nexuskrop.stackpun.frontend.commands.MuteCommand;
+import io.github.nexuskrop.stackpun.frontend.commands.SaveProfilesCommand;
 import io.github.nexuskrop.stackpun.frontend.commands.UnmuteCommand;
 import io.github.nexuskrop.stackpun.players.ChatManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -67,12 +68,13 @@ public class StackPun extends JavaPlugin {
         commandManager.registerCommand(new BlipCommand());
         commandManager.registerCommand(new UnmuteCommand());
         commandManager.registerCommand(new MuteCommand());
+        commandManager.registerCommand(new SaveProfilesCommand());
     }
 
     @Override
     public void onDisable() {
+        profileManager.save();
         // 禁止再写入，保存
         profileManager.prohibitWrite(true);
-        profileManager.save();
     }
 }
