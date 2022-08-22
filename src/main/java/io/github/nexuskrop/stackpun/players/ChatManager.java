@@ -13,17 +13,13 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public final class ChatManager implements Listener {
     private final StackPun plugin;
     private final String chatFormat = "<dark_gray>[<dim>]</dark_gray> [<player_name>] <gray><message>";
-    private final LegacyComponentSerializer serializer = LegacyComponentSerializer
-            .legacy(ChatColor.COLOR_CHAR);
 
     public ChatManager(StackPun self) {
         plugin = self;
@@ -46,7 +42,6 @@ public final class ChatManager implements Listener {
                 Placeholder.component("player_name", player.displayName()),
                 Placeholder.component("message", event.message()));
 
-        plugin.getServer().getLogger().info(serializer.serialize(comp));
         Bukkit.getServer().broadcast(comp);
         event.setCancelled(true);
     }
