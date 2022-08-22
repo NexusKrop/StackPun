@@ -55,4 +55,11 @@ public class StackPun extends JavaPlugin {
         profileManager = new ProfileManager(this);
         profileManager.init();
     }
+
+    @Override
+    public void onDisable() {
+        // 禁止再写入，保存
+        profileManager.prohibitWrite(true);
+        profileManager.save();
+    }
 }

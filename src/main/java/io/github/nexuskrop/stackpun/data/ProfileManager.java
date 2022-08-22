@@ -99,6 +99,17 @@ public final class ProfileManager {
         return prohibitWrite;
     }
 
+    public void ensureProfile(@NotNull Player player) {
+        // 提前获取UUID
+        var uuid = Objects.requireNonNull(player).getUniqueId();
+
+        if (!profiles.containsKey(uuid)) {
+            // 如果没有现存实例，创建新的实例
+            var result = new PlayerProfile(player.getName());
+            profiles.put(uuid, result);
+        }
+    }
+
     public PlayerProfile getProfile(@NotNull Player player) {
         // 提前获取UUID
         var uuid = Objects.requireNonNull(player).getUniqueId();
