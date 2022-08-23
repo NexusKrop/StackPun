@@ -10,6 +10,7 @@ import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import io.github.nexuskrop.stackpun.StackPun;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -20,8 +21,17 @@ public class BlipCommand implements StackCommand {
                 .withPermission(StackPun.cmdPerm("blip"))
                 .withArguments(new PlayerArgument("target"))
                 .executesConsole(this::execute)
-                .executesPlayer(this::execute)
+                .executesPlayer(this::executePlayer)
                 .register();
+    }
+
+    public void executePlayer(Player player, Object[] args) {
+        if (StackPun.api().profileManager().getProfile(player).muted) {
+            player.sendMessage(Component.text("You are currently muted").color(NamedTextColor.RED));
+            return;
+        }
+
+        execute(player, args);
     }
 
     public void execute(CommandSender sender, Object[] args) {
