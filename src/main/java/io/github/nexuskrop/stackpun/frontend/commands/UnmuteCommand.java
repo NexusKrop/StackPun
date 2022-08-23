@@ -15,6 +15,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class UnmuteCommand implements StackCommand {
+    private static final String UNMUTE_SELF_PERM = StackPun.cmdPerm("unmute.self");
+
     @Override
     public void register() {
         new CommandAPICommand("unmute")
@@ -31,10 +33,18 @@ public class UnmuteCommand implements StackCommand {
 
         if (!profile.muted) {
             sender.sendMessage(Component.text("The user was not muted!").color(NamedTextColor.RED));
-        } else {
-            profile.muted = false;
-            StackPun.api().profileManager().putProfile(player, profile);
-            sender.sendMessage(Component.text("Unmuted ").append(player.displayName()));
+            return;
         }
+
+        if (player == sender) {
+            if (!player.hasPermission(UNMUTE_SELF_PERM)) {
+                sender.sendMessage(Component.text("You cannot unmute yourself").color(NamedTextColor.RED));
+                return;
+            }
+        }
+
+        profile.muted = false;
+        StackPun.api().profileManager().putProfile(player, profile);
+        sender.sendMessage(Component.text("Unmuted ").append(player.displayName()));
     }
 }
