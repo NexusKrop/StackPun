@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun.api;
 
 import io.github.nexuskrop.stackpun.data.ProfileManager;
 import io.github.nexuskrop.stackpun.frontend.CommandManager;
+import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
 import io.github.nexuskrop.stackpun.players.ChatManager;
 
 /**
@@ -37,4 +38,11 @@ public interface IStackPun {
      * @return An instance of {@link ProfileManager}. Will always return the same instance.
      */
     ProfileManager profileManager();
+
+    /**
+     * Gets a shared instance of the {@link MessageManager}.
+     *
+     * @return An instance of {@link MessageManager}. Will always return the same instance.
+     */
+    MessageManager messageManager();
 }

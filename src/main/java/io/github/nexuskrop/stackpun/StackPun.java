@@ -13,8 +13,11 @@ import io.github.nexuskrop.stackpun.frontend.commands.BlipCommand;
 import io.github.nexuskrop.stackpun.frontend.commands.MuteCommand;
 import io.github.nexuskrop.stackpun.frontend.commands.SaveProfilesCommand;
 import io.github.nexuskrop.stackpun.frontend.commands.UnmuteCommand;
+import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
 import io.github.nexuskrop.stackpun.players.ChatManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
 
 /**
  * Provides initialisation service and main API access point for the StackPun plugin.
@@ -30,6 +33,8 @@ public class StackPun extends JavaPlugin implements IStackPun {
     private CommandManager commandManager;
     private ChatManager chatManager;
     private ProfileManager profileManager;
+
+    private MessageManager messageManager;
 
     private void setInstance(StackPun instance) {
         _instance = instance;
@@ -54,6 +59,10 @@ public class StackPun extends JavaPlugin implements IStackPun {
         return profileManager;
     }
 
+    public MessageManager messageManager() {
+        return messageManager;
+    }
+
     public ChatManager chatManager() {
         return chatManager;
     }
@@ -69,6 +78,8 @@ public class StackPun extends JavaPlugin implements IStackPun {
     public void onEnable() {
         setInstance(this);
         getSLF4JLogger().info("StackPun Service instantiated");
+
+        messageManager = new MessageManager(new File(this.getDataFolder(), "msg.properties"), this.getSLF4JLogger());
 
         chatManager = new ChatManager(this);
 
