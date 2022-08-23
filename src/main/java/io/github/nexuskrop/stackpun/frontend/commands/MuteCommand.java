@@ -29,13 +29,13 @@ public class MuteCommand implements StackCommand {
 
     public void execute(CommandSender sender, Object[] args) {
         var player = (Player) args[0];
-        var profile = StackPun.instance().profileManager().getProfile(player);
+        var profile = StackPun.api().profileManager().getProfile(player);
 
         if (profile.muted) {
             sender.sendMessage(Component.text("The user is already muted!").color(NamedTextColor.RED));
         } else {
             profile.muted = true;
-            StackPun.instance().profileManager().putProfile(player, profile);
+            StackPun.api().profileManager().putProfile(player, profile);
             sender.sendMessage(Component.text("Muted ").append(player.displayName()));
         }
     }

@@ -17,7 +17,7 @@ public class SaveProfilesCommand implements StackCommand {
         new CommandAPICommand("save-profiles")
                 .withPermission(CommandPermission.OP)
                 .executes((sender, args) -> {
-                    StackPun.instance().profileManager().save();
+                    StackPun.api().profileManager().save();
                 })
                 .register();
     }

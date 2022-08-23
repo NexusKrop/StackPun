@@ -28,13 +28,13 @@ public class UnmuteCommand implements StackCommand {
 
     public void execute(CommandSender sender, Object[] args) {
         var player = (Player) args[0];
-        var profile = StackPun.instance().profileManager().getProfile(player);
+        var profile = StackPun.api().profileManager().getProfile(player);
 
         if (!profile.muted) {
             sender.sendMessage(Component.text("The user was not muted!").color(NamedTextColor.RED));
         } else {
             profile.muted = false;
-            StackPun.instance().profileManager().putProfile(player, profile);
+            StackPun.api().profileManager().putProfile(player, profile);
             sender.sendMessage(Component.text("Unmuted ").append(player.displayName()));
         }
     }

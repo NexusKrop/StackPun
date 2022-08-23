@@ -6,6 +6,7 @@
 
 package io.github.nexuskrop.stackpun;
 
+import io.github.nexuskrop.stackpun.api.IStackPun;
 import io.github.nexuskrop.stackpun.data.ProfileManager;
 import io.github.nexuskrop.stackpun.frontend.CommandManager;
 import io.github.nexuskrop.stackpun.frontend.commands.BlipCommand;
@@ -16,12 +17,14 @@ import io.github.nexuskrop.stackpun.players.ChatManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * Provides initialisation service for the StackPun plugin.
+ * Provides initialisation service and main API access point for the StackPun plugin.
  *
  * @author WithLithum
+ * @apiNote Use {@code StackPun.instance()} to acquire a shared instance. Do not create a new
+ * instance as it will mess up the environment.
  * @see org.bukkit.plugin.java.JavaPlugin
  */
-public class StackPun extends JavaPlugin {
+public class StackPun extends JavaPlugin implements IStackPun {
     private static StackPun _instance;
 
     private CommandManager commandManager;
@@ -32,15 +35,17 @@ public class StackPun extends JavaPlugin {
         _instance = instance;
     }
 
-    public static StackPun instance() {
+    /**
+     * Gets the API instance of this plugin.
+     *
+     * @return An instance of {@link StackPun} as {@link IStackPun}. Will always return the same
+     * instance.
+     */
+    public static IStackPun api() {
         return _instance;
     }
 
-    /**
-     * Gets the command manager of this instance.
-     *
-     * @return The command manager.
-     */
+
     public CommandManager commandManager() {
         return commandManager;
     }
@@ -49,6 +54,13 @@ public class StackPun extends JavaPlugin {
         return profileManager;
     }
 
+    public ChatManager chatManager() {
+        return chatManager;
+    }
+
+    /**
+     * Enables this {@link JavaPlugin} and initialises this plugin.
+     */
     @Override
     public void onEnable() {
         setInstance(this);
@@ -64,6 +76,9 @@ public class StackPun extends JavaPlugin {
         initCommands();
     }
 
+    /**
+     * Register all commands in the command manager.
+     */
     public void initCommands() {
         commandManager.registerCommand(new BlipCommand());
         commandManager.registerCommand(new UnmuteCommand());
@@ -71,6 +86,9 @@ public class StackPun extends JavaPlugin {
         commandManager.registerCommand(new SaveProfilesCommand());
     }
 
+    /**
+     * Disables this plugin and cleans up everything.
+     */
     @Override
     public void onDisable() {
         profileManager.save();
