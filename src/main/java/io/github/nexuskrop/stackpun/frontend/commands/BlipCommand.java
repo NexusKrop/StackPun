@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun.frontend.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
+import io.github.nexuskrop.stackpun.StackPun;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,6 +17,7 @@ public class BlipCommand implements StackCommand {
     @Override
     public void register() {
         new CommandAPICommand("blip")
+                .withPermission(StackPun.cmdPerm("blip"))
                 .withArguments(new PlayerArgument("target"))
                 .executesConsole(this::execute)
                 .executesPlayer(this::execute)

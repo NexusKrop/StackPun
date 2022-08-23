@@ -7,7 +7,6 @@
 package io.github.nexuskrop.stackpun.frontend.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import io.github.nexuskrop.stackpun.StackPun;
 import net.kyori.adventure.text.Component;
@@ -20,7 +19,7 @@ public class MuteCommand implements StackCommand {
     @Override
     public void register() {
         new CommandAPICommand("mute")
-                .withPermission(CommandPermission.OP)
+                .withPermission(StackPun.cmdPerm("mute"))
                 .withArguments(new PlayerArgument("target"))
                 .executesConsole(this::execute)
                 .executesPlayer(this::execute)

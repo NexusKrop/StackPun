@@ -58,6 +58,10 @@ public class StackPun extends JavaPlugin implements IStackPun {
         return chatManager;
     }
 
+    public static String cmdPerm(String command) {
+        return "stackpun.commands." + command;
+    }
+
     /**
      * Enables this {@link JavaPlugin} and initialises this plugin.
      */

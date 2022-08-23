@@ -7,7 +7,6 @@
 package io.github.nexuskrop.stackpun.frontend.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.CommandPermission;
 import io.github.nexuskrop.stackpun.StackPun;
 
 public class SaveProfilesCommand implements StackCommand {
@@ -15,7 +14,7 @@ public class SaveProfilesCommand implements StackCommand {
     @Override
     public void register() {
         new CommandAPICommand("save-profiles")
-                .withPermission(CommandPermission.OP)
+                .withPermission(StackPun.cmdPerm("save-profiles"))
                 .executes((sender, args) -> {
                     StackPun.api().profileManager().save();
                 })
