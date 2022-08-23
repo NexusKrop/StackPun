@@ -10,11 +10,14 @@ import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import io.github.nexuskrop.stackpun.StackPun;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class BlipCommand implements StackCommand {
+    private static final String BLIPPED = "commands.blip.blipped";
+
     @Override
     public void register() {
         new CommandAPICommand("blip")
@@ -27,7 +30,7 @@ public class BlipCommand implements StackCommand {
 
     public void executePlayer(Player player, Object[] args) {
         if (StackPun.api().profileManager().getProfile(player).muted) {
-            player.sendMessage(Component.text("You are currently muted").color(NamedTextColor.RED));
+            StackCommand.sendErrorLoc(player, StackCommand.MESSAGE_MUTED);
             return;
         }
 
@@ -37,5 +40,9 @@ public class BlipCommand implements StackCommand {
     public void execute(CommandSender sender, Object[] args) {
         var player = (Player) args[0];
         player.sendMessage(sender.name().append(Component.text(" blips you.")));
+
+        player.sendMessage(MiniMessage.miniMessage().deserialize(
+                StackPun.api().messageManager().get(BLIPPED),
+                Placeholder.component("source", sender.name())));
     }
 }

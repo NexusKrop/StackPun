@@ -6,6 +6,8 @@
 
 package io.github.nexuskrop.stackpun.frontend.locale;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -42,6 +44,18 @@ public final class MessageManager {
         }
 
         return messages.get(id).toString();
+    }
+
+    public Component getComp(@NotNull String id) {
+        return Component.text(get(id));
+    }
+
+    public Component getMini(@NotNull String id) {
+        if (!messages.containsKey(Objects.requireNonNull(id))) {
+            return Component.text(id);
+        }
+
+        return MiniMessage.miniMessage().deserialize(messages.get(id).toString());
     }
 
     public void tryInit() {

@@ -7,10 +7,9 @@
 package io.github.nexuskrop.stackpun.players;
 
 import io.github.nexuskrop.stackpun.StackPun;
+import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
 import io.github.nexuskrop.stackpun.util.Common;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
@@ -32,7 +31,7 @@ public final class ChatManager implements Listener {
         var player = event.getPlayer();
 
         if (plugin.profileManager().getProfile(player).muted) {
-            player.sendMessage(Component.text("You are currently MUTED.").color(NamedTextColor.RED));
+            StackCommand.sendErrorLoc(player, StackCommand.MESSAGE_MUTED);
             event.setCancelled(true);
             return;
         }
