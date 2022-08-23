@@ -3,5 +3,20 @@ version: 0.1.0-alpha
 main: io.github.nexuskrop.stackpun.StackPun
 api-version: "1.19"
 prefix: StaP
-depend: [CommandAPI]
-
+depend: [ CommandAPI ]
+permissions:
+  stackpun.commands.blip:
+    default: true
+    description: Blip command
+  stackpun.commands.mute:
+    default: op
+    description: Mute players
+  stackpun.commands.unmute:
+    default: op
+    description: Unmute players
+  stackpun.commands.unmute.self:
+    default: false
+    description: Unmute self
+  stackpun.commands.save-profiles:
+    default: op
+    description: Save all profiles
