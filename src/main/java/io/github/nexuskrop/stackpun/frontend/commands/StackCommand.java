@@ -32,7 +32,7 @@ public interface StackCommand {
     }
 
     static void sendMessageLoc(CommandSender target, String id) {
-        target.sendMessage(StackPun.api().messageManager().getComp(id));
+        target.sendRichMessage(StackPun.api().messageManager().get(id));
     }
 
     static void sendMessageVal(CommandSender target, String id, String val) {
