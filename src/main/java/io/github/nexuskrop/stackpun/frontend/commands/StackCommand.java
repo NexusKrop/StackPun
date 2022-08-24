@@ -12,6 +12,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -25,6 +27,38 @@ public interface StackCommand {
 
     static void sendError(CommandSender target, Component error) {
         target.sendMessage(error.color(NamedTextColor.RED));
+    }
+
+    static void sendSuccess(CommandSender target, Component component) {
+        if (isFeedbackEnabled()) {
+            target.sendMessage(component);
+            broadcastSuccess(target, component);
+        }
+    }
+
+    static void sendSuccessLoc(CommandSender target, String id) {
+        sendSuccess(target, StackPun.api().messageManager().getMini(id));
+    }
+
+    static void broadcastSuccess(CommandSender source, Component component) {
+        if (StackPun.api().isGameRuleEnabled(GameRule.SEND_COMMAND_FEEDBACK, true)) {
+            for (var player :
+                    Bukkit.getServer().getOnlinePlayers()) {
+                if (player.hasPermission("stackpun.commands.generic.broadcast")) {
+                    player.sendMessage(Component.translatable("chat.type.admin")
+                            .args(source.name(), component));
+                }
+            }
+        }
+    }
+
+    static boolean isFeedbackEnabled() {
+        var ow = StackPun.api().overWorld();
+        if (ow != null) {
+            return Boolean.TRUE.equals(ow.getGameRuleValue(GameRule.SEND_COMMAND_FEEDBACK));
+        } else {
+            return true;
+        }
     }
 
     static void sendErrorLoc(CommandSender target, String id) {

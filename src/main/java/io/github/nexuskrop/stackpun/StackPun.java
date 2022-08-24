@@ -12,7 +12,10 @@ import io.github.nexuskrop.stackpun.frontend.CommandManager;
 import io.github.nexuskrop.stackpun.frontend.commands.*;
 import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
 import io.github.nexuskrop.stackpun.players.ChatManager;
+import org.bukkit.GameRule;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 
@@ -30,6 +33,7 @@ public class StackPun extends JavaPlugin implements IStackPun {
     private CommandManager commandManager;
     private ChatManager chatManager;
     private ProfileManager profileManager;
+    private World overWorld;
 
     private MessageManager messageManager;
 
@@ -60,6 +64,22 @@ public class StackPun extends JavaPlugin implements IStackPun {
         return messageManager;
     }
 
+    @Override
+    @Nullable
+    public World overWorld() {
+        return null;
+    }
+
+    @Override
+    public boolean isGameRuleEnabled(GameRule<Boolean> gameRule, boolean def) {
+        var ow = overWorld();
+        if (ow != null) {
+            return Boolean.TRUE.equals(ow.getGameRuleValue(gameRule));
+        } else {
+            return def;
+        }
+    }
+
     public ChatManager chatManager() {
         return chatManager;
     }
@@ -74,6 +94,8 @@ public class StackPun extends JavaPlugin implements IStackPun {
     @Override
     public void onEnable() {
         setInstance(this);
+        overWorld = this.getServer().getWorld("overworld");
+
         getSLF4JLogger().info("StackPun Service instantiated");
 
         messageManager = new MessageManager(new File(this.getDataFolder(), "msg.properties"), this.getSLF4JLogger());

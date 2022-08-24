@@ -20,7 +20,7 @@ public class SaveProfilesCommand implements StackCommand {
                 .executes((sender, args) -> {
                     StackCommand.sendMessageLoc(sender, BEGIN);
                     StackPun.api().profileManager().save();
-                    StackCommand.sendMessageLoc(sender, SUCCESS);
+                    StackCommand.sendSuccessLoc(sender, SUCCESS);
                 })
                 .register();
     }

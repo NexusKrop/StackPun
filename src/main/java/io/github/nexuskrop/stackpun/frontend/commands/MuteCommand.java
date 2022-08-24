@@ -38,7 +38,7 @@ public class MuteCommand implements StackCommand {
         } else {
             profile.muted = true;
             StackPun.api().profileManager().putProfile(player, profile);
-            sender.sendMessage(MiniMessage.miniMessage().deserialize(
+            StackCommand.sendSuccess(sender, MiniMessage.miniMessage().deserialize(
                     StackPun.api().messageManager().get(SUCCESS),
                     Placeholder.component("victim", player.displayName())));
         }

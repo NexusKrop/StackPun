@@ -51,6 +51,6 @@ public class UnmuteCommand implements StackCommand {
 
         var feedback = MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(SUCCESS),
                 Placeholder.component("victim", player.displayName()));
-        sender.sendMessage(feedback);
+        StackCommand.sendSuccess(sender, feedback);
     }
 }

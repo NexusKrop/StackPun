@@ -26,3 +26,6 @@ permissions:
   stackpun.commands.spawn:
     default: true
     description: Teleport to spawn
+  stackpun.commands.generic.broadcast:
+    default: op
+    description: Receive broadcast

@@ -10,6 +10,9 @@ import io.github.nexuskrop.stackpun.data.ProfileManager;
 import io.github.nexuskrop.stackpun.frontend.CommandManager;
 import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
 import io.github.nexuskrop.stackpun.players.ChatManager;
+import org.bukkit.GameRule;
+import org.bukkit.World;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents the API interface for StackPun plugin.
@@ -45,4 +48,21 @@ public interface IStackPun {
      * @return An instance of {@link MessageManager}. Will always return the same instance.
      */
     MessageManager messageManager();
+
+    /**
+     * Gets the overworld.
+     *
+     * @return An instance of {@link World} representing the overworld.
+     */
+    @Nullable
+    World overWorld();
+
+    /**
+     * Gets whether a game rule is enabled.
+     *
+     * @param gameRule The rule to check.
+     * @param def      The default value if unable to acquire such rule.
+     * @return The rule result.
+     */
+    boolean isGameRuleEnabled(GameRule<Boolean> gameRule, boolean def);
 }

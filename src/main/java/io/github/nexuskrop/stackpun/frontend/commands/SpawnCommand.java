@@ -20,7 +20,7 @@ public class SpawnCommand implements StackCommand {
                 .withPermission("stackpun.commands.spawn")
                 .executesPlayer((sender, args) -> {
                     sender.teleport(sender.getWorld().getSpawnLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
-                    StackCommand.sendMessageLoc(sender, SUCCESS);
+                    StackCommand.sendSuccessLoc(sender, SUCCESS);
                 })
                 .register();
     }
