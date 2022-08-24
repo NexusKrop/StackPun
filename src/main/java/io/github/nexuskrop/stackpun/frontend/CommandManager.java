@@ -7,6 +7,7 @@
 package io.github.nexuskrop.stackpun.frontend;
 
 import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class CommandManager {
 
     public void registerCommand(@NotNull StackCommand instance) {
         Objects.requireNonNull(instance).register();
+        Bukkit.getServer().getLogger().info("StaP registering command " + instance.getClass().getName());
         commands.add(instance);
     }
 }

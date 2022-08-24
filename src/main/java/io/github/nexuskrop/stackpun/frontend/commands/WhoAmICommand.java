@@ -22,6 +22,6 @@ public class WhoAmICommand implements StackCommand {
                     StackCommand.sendMessageLoc(sender, LINE_1);
                     StackCommand.sendMessageVal(sender, LINE_2, sender);
                     StackCommand.sendMessageVal(sender, LINE_2, StackCommand.getMuted(sender));
-                });
+                }).register();
     }
 }

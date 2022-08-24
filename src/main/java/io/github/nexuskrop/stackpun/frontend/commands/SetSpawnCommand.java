@@ -19,6 +19,6 @@ public class SetSpawnCommand implements StackCommand {
                 .executesPlayer((sender, args) -> {
                     sender.getWorld().setSpawnLocation(sender.getLocation());
                     StackCommand.sendMessageLoc(sender, SUCCESS);
-                });
+                }).register();
     }
 }
