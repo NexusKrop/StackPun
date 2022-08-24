@@ -98,6 +98,7 @@ public class StackPun extends JavaPlugin implements IStackPun {
         commandManager.registerCommand(new SaveProfilesCommand());
         commandManager.registerCommand(new SetSpawnCommand());
         commandManager.registerCommand(new SpawnCommand());
+        commandManager.registerCommand(new WhoAmICommand());
     }
 
     /**
