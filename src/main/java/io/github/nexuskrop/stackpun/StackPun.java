@@ -9,10 +9,7 @@ package io.github.nexuskrop.stackpun;
 import io.github.nexuskrop.stackpun.api.IStackPun;
 import io.github.nexuskrop.stackpun.data.ProfileManager;
 import io.github.nexuskrop.stackpun.frontend.CommandManager;
-import io.github.nexuskrop.stackpun.frontend.commands.BlipCommand;
-import io.github.nexuskrop.stackpun.frontend.commands.MuteCommand;
-import io.github.nexuskrop.stackpun.frontend.commands.SaveProfilesCommand;
-import io.github.nexuskrop.stackpun.frontend.commands.UnmuteCommand;
+import io.github.nexuskrop.stackpun.frontend.commands.*;
 import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
 import io.github.nexuskrop.stackpun.players.ChatManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -99,6 +96,8 @@ public class StackPun extends JavaPlugin implements IStackPun {
         commandManager.registerCommand(new UnmuteCommand());
         commandManager.registerCommand(new MuteCommand());
         commandManager.registerCommand(new SaveProfilesCommand());
+        commandManager.registerCommand(new SetSpawnCommand());
+        commandManager.registerCommand(new SpawnCommand());
     }
 
     /**

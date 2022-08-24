@@ -20,3 +20,9 @@ permissions:
   stackpun.commands.save-profiles:
     default: op
     description: Save all profiles
+  stackpun.commands.setspawn:
+    default: op
+    description: Set spawn point
+  stackpun.commands.spawn:
+    default: true
+    description: Teleport to spawn
