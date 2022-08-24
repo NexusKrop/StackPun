@@ -9,6 +9,8 @@ package io.github.nexuskrop.stackpun.frontend.commands;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import io.github.nexuskrop.stackpun.StackPun;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -17,6 +19,9 @@ import org.bukkit.entity.Player;
 
 public class BlipCommand implements StackCommand {
     private static final String BLIPPED = "commands.blip.blipped";
+    private static final Sound BLIPPED_SOUND = Sound.sound(Key.key("minecraft",
+                    "entity.experience_orb.pickup"),
+            Sound.Source.MASTER, 1f, 1f);
 
     @Override
     public void register() {
@@ -44,5 +49,6 @@ public class BlipCommand implements StackCommand {
         player.sendMessage(MiniMessage.miniMessage().deserialize(
                 StackPun.api().messageManager().get(BLIPPED),
                 Placeholder.component("source", sender.name())));
+        player.playSound(BLIPPED_SOUND);
     }
 }
