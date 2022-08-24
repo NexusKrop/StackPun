@@ -86,7 +86,7 @@ public final class MessageManager {
     }
 
     public void loadMessagesFromResource() {
-        try (var stream = MessageManager.class.getResourceAsStream("msg.properties")) {
+        try (var stream = MessageManager.class.getResourceAsStream("/msg.properties")) {
             messages.load(stream);
         } catch (Exception ex) {
             logger.error("Failed to load messages", ex);
