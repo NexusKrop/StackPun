@@ -17,7 +17,7 @@ public final class Common {
     }
 
     public static @NotNull String getEntityDimText(@NotNull Entity entity) {
-        return Objects.requireNonNull(entity).getWorld().getEnvironment().name();
+        return Objects.requireNonNull(entity).getWorld().getName();
     }
 
     public static @NotNull Component getEntityRepresent(@NotNull Entity entity) {
