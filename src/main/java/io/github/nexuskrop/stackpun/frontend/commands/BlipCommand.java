@@ -11,7 +11,6 @@ import dev.jorel.commandapi.arguments.PlayerArgument;
 import io.github.nexuskrop.stackpun.StackPun;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.command.CommandSender;
@@ -34,7 +33,9 @@ public class BlipCommand implements StackCommand {
     }
 
     public void executePlayer(Player player, Object[] args) {
+        // 检查玩家是否被禁言
         if (StackPun.api().profileManager().getProfile(player).muted) {
+            // 如果被禁言，拦截操作并提示
             StackCommand.sendErrorLoc(player, StackCommand.MESSAGE_MUTED);
             return;
         }
@@ -44,11 +45,13 @@ public class BlipCommand implements StackCommand {
 
     public void execute(CommandSender sender, Object[] args) {
         var player = (Player) args[0];
-        player.sendMessage(sender.name().append(Component.text(" blips you.")));
 
+        // 发送提示消息
         player.sendMessage(MiniMessage.miniMessage().deserialize(
                 StackPun.api().messageManager().get(BLIPPED),
                 Placeholder.component("source", sender.name())));
+
+        // 播放提示音
         player.playSound(BLIPPED_SOUND);
     }
 }
