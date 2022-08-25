@@ -6,11 +6,20 @@
 
 package io.github.nexuskrop.stackpun.data;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public class PlayerProfile {
     public PlayerProfile(String playerName) {
         name = playerName;
     }
 
+    public PlayerProfile() {
+        name = "___";
+    }
+
     public final String name;
     public boolean muted;
+    public List<UUID> blockedPlayers = new ArrayList<>();
 }

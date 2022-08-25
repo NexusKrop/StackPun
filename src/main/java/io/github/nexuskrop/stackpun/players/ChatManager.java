@@ -29,8 +29,9 @@ public final class ChatManager implements Listener {
     public void onChatMessage(AsyncChatEvent event) {
         // TODO 解除 chatFormat 硬编码
         var player = event.getPlayer();
+        var profile = plugin.profileManager().getProfile(player);
 
-        if (plugin.profileManager().getProfile(player).muted) {
+        if (profile.muted) {
             StackCommand.sendErrorLoc(player, StackCommand.MESSAGE_MUTED);
             event.setCancelled(true);
             return;
@@ -41,7 +42,15 @@ public final class ChatManager implements Listener {
                 Placeholder.component("player_name", player.displayName()),
                 Placeholder.component("message", event.message()));
 
-        Bukkit.getServer().broadcast(comp);
+        for (var target :
+                Bukkit.getServer().getOnlinePlayers()) {
+            if (!profile.blockedPlayers.contains(target.getUniqueId())) {
+                target.sendMessage(comp);
+            }
+        }
+
+        Bukkit.getServer().sendMessage(comp);
+
         event.setCancelled(true);
     }
 }
