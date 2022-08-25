@@ -42,18 +42,24 @@ public interface StackCommand {
     }
 
     static void broadcastSuccess(CommandSender source, Component component) {
+        // 合成消息（chat.type.admin）
         var msg = Component.translatable("chat.type.admin")
                 .args(source.name(), component).color(NamedTextColor.GRAY)
                 .decorate(TextDecoration.ITALIC);
 
+        // 检查游戏规则 sendCommandFeedback 是否启用
         if (StackPun.api().isGameRuleEnabled(GameRule.SEND_COMMAND_FEEDBACK, true)) {
+            // 如果启用，遍历所有人
             for (var player :
                     Bukkit.getServer().getOnlinePlayers()) {
+                // 有权限且不是命令的执行者
                 if (player != source && player.hasPermission("stackpun.commands.generic.broadcast")) {
+                    // 发送消息
                     player.sendMessage(msg);
                 }
             }
 
+            // 给服务端发送消息
             Bukkit.getServer().sendMessage(msg);
         }
     }

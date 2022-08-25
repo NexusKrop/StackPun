@@ -30,12 +30,16 @@ public class MuteCommand implements StackCommand {
     }
 
     public void execute(CommandSender sender, Object[] args) {
+        // 获取玩家和资料文件
         var player = (Player) args[0];
         var profile = StackPun.api().profileManager().getProfile(player);
 
+        // 检查是否已禁言
         if (profile.muted) {
+            // 如果已经禁言，提示并返回
             StackCommand.sendError(sender, StackPun.api().messageManager().getComp(ALREADY_MUTED));
         } else {
+            // 设置资料内禁言为 true
             profile.muted = true;
             StackPun.api().profileManager().putProfile(player, profile);
             StackCommand.sendSuccess(sender, MiniMessage.miniMessage().deserialize(
