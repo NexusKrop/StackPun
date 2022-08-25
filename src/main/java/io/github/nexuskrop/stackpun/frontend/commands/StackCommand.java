@@ -10,6 +10,7 @@ import io.github.nexuskrop.stackpun.StackPun;
 import io.github.nexuskrop.stackpun.util.Common;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
@@ -41,14 +42,19 @@ public interface StackCommand {
     }
 
     static void broadcastSuccess(CommandSender source, Component component) {
+        var msg = Component.translatable("chat.type.admin")
+                .args(source.name(), component).color(NamedTextColor.GRAY)
+                .decorate(TextDecoration.ITALIC);
+
         if (StackPun.api().isGameRuleEnabled(GameRule.SEND_COMMAND_FEEDBACK, true)) {
             for (var player :
                     Bukkit.getServer().getOnlinePlayers()) {
-                if (player.hasPermission("stackpun.commands.generic.broadcast")) {
-                    player.sendMessage(Component.translatable("chat.type.admin")
-                            .args(source.name(), component));
+                if (player != source && player.hasPermission("stackpun.commands.generic.broadcast")) {
+                    player.sendMessage(msg);
                 }
             }
+
+            Bukkit.getServer().sendMessage(msg);
         }
     }
 
