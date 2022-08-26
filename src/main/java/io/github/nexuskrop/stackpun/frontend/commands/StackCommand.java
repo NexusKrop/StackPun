@@ -64,14 +64,15 @@ public interface StackCommand {
             for (var player :
                     Bukkit.getServer().getOnlinePlayers()) {
                 // 有权限且不是命令的执行者
-                if (player != source && player.hasPermission("stackpun.commands.generic.broadcast")) {
+                if (!player.getName().equals(source.getName()) && player.hasPermission("stackpun.commands.generic.broadcast")) {
                     // 发送消息
                     player.sendMessage(msg);
                 }
             }
 
-            // 给服务端发送消息
-            Bukkit.getServer().sendMessage(msg);
+            if (!Bukkit.getServer().equals(source)) {
+                Bukkit.getServer().sendMessage(msg);
+            }
         }
     }
 

@@ -33,13 +33,16 @@ public final class PlayerManager implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         var player = event.getPlayer();
 
+        plugin.getSLF4JLogger().info("Player {} joined with client {}", player.getName(), player.getClientBrandName());
         // 创建资料
         var profile = plugin.profileManager().getProfile(player);
 
         if (profile.wasModded && Objects.equals(player.getClientBrandName(), "vanilla")) {
+            plugin.getSLF4JLogger().info("Player {} client no longer modded", player.getName());
             profile.wasModded = false;
             profile.wasNotifiedForModded = false;
         } else if (!Objects.equals(player.getClientBrandName(), "vanilla")) {
+            plugin.getSLF4JLogger().info("Player {} was joined using a modded client", player.getName());
             profile.wasModded = true;
 
             if (!profile.wasNotifiedForModded) {
