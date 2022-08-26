@@ -39,7 +39,13 @@ public interface StackCommand {
     }
 
     static void sendSuccessVal(CommandSender target, String id, Component val) {
+        if (isFeedbackEnabled()) {
+            var msg = MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(id),
+                    Placeholder.component("value", val));
 
+            target.sendMessage(msg);
+            broadcastSuccess(target, msg);
+        }
     }
 
     static void sendSuccessLoc(CommandSender target, String id) {
