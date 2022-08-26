@@ -25,6 +25,7 @@ public interface StackCommand {
     String MESSAGE_MUTED = "commands.generic.muted";
     String MESSAGE_MUTED_YES = "commands.generic.muted.yes";
     String MESSAGE_MUTED_NO = "commands.generic.muted.no";
+    String MESSAGE_SPECIFY_SELF_FAILURE = "commands.generic.self_specify_failure";
 
     static void sendError(CommandSender target, Component error) {
         target.sendMessage(error.color(NamedTextColor.RED));
@@ -35,6 +36,10 @@ public interface StackCommand {
             target.sendMessage(component);
             broadcastSuccess(target, component);
         }
+    }
+
+    static void sendSuccessVal(CommandSender target, String id, Component val) {
+
     }
 
     static void sendSuccessLoc(CommandSender target, String id) {
@@ -76,6 +81,12 @@ public interface StackCommand {
     static void sendErrorLoc(CommandSender target, String id) {
         target.sendMessage(StackPun.api().messageManager().getComp(id).color(NamedTextColor.RED));
     }
+
+    static void sendErrorVal(CommandSender target, String id, Component val) {
+        target.sendMessage(MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(id),
+                Placeholder.component("value", val)));
+    }
+
 
     static void sendMessageLoc(CommandSender target, String id) {
         target.sendRichMessage(StackPun.api().messageManager().get(id));

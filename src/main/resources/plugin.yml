@@ -29,3 +29,12 @@ permissions:
   stackpun.commands.generic.broadcast:
     default: op
     description: Receive broadcast
+  stackpun.commands.ignore:
+    default: true
+    description: Ignore/Un-ignore player
+  stackpun.commands.ignore.ops:
+    default: false
+    description: Ignore operators
+  stackpun.commands.ignore.as-op:
+    default: op
+    description: Recognised as operator by ignore command
