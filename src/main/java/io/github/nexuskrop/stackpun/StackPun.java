@@ -12,6 +12,7 @@ import io.github.nexuskrop.stackpun.frontend.CommandManager;
 import io.github.nexuskrop.stackpun.frontend.commands.*;
 import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
 import io.github.nexuskrop.stackpun.players.ChatManager;
+import io.github.nexuskrop.stackpun.players.PlayerManager;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,6 +34,7 @@ public class StackPun extends JavaPlugin implements IStackPun {
     private CommandManager commandManager;
     private ChatManager chatManager;
     private ProfileManager profileManager;
+    private PlayerManager playerManager;
     private World overWorld;
 
     private MessageManager messageManager;
@@ -104,6 +106,8 @@ public class StackPun extends JavaPlugin implements IStackPun {
 
         profileManager = new ProfileManager(this);
         profileManager.init();
+
+        playerManager = new PlayerManager(this);
 
         commandManager = new CommandManager();
         // TODO: 反射解析自动注册
