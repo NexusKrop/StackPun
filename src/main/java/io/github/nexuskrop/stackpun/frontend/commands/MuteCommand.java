@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun.frontend.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
+import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import io.github.nexuskrop.stackpun.StackPun;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -29,7 +30,7 @@ public class MuteCommand implements StackCommand {
                 .register();
     }
 
-    public void execute(CommandSender sender, Object[] args) {
+    public void execute(CommandSender sender, Object[] args) throws WrapperCommandSyntaxException {
         // 获取玩家和资料文件
         var player = (Player) args[0];
         var profile = StackPun.api().profileManager().getProfile(player);
@@ -37,7 +38,7 @@ public class MuteCommand implements StackCommand {
         // 检查是否已禁言
         if (profile.muted) {
             // 如果已经禁言，提示并返回
-            StackCommand.sendError(sender, StackPun.api().messageManager().getComp(ALREADY_MUTED));
+            StackCommand.failLoc(ALREADY_MUTED);
         } else {
             // 设置资料内禁言为 true
             profile.muted = true;

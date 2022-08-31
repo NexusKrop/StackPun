@@ -6,8 +6,10 @@
 
 package io.github.nexuskrop.stackpun.frontend.commands;
 
+import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
+import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import io.github.nexuskrop.stackpun.StackPun;
 import org.bukkit.entity.Player;
 
@@ -26,20 +28,19 @@ public class IgnoreCommand implements StackCommand {
                 .executesPlayer(this::execute);
     }
 
-    public void execute(Player sender, Object[] args) {
+    public void execute(Player sender, Object[] args) throws WrapperCommandSyntaxException {
         var player = (Player) args[0];
         var profile = StackPun.api().profileManager().getProfile(sender);
 
         // 禁止执行者自我拉黑
         if (player == sender) {
-            StackCommand.sendErrorLoc(sender, MESSAGE_SPECIFY_SELF_FAILURE);
+            StackCommand.failLoc(MESSAGE_SPECIFY_SELF_FAILURE);
             return;
         }
 
         // 检查执行者是否有拉黑管理员权限
         if (!sender.hasPermission("stackpun.commands.ignore.ops") && player.hasPermission("stackpun.commands.ignore.as-op")) {
-            StackCommand.sendErrorVal(sender, OP_DENIED, player.name());
-            return;
+            throw CommandAPI.fail(String.format(StackCommand.loc(OP_DENIED), sender.getName()));
         }
 
         // 获取 UUID

@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun.frontend.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
+import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import io.github.nexuskrop.stackpun.StackPun;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
@@ -32,11 +33,11 @@ public class BlipCommand implements StackCommand {
                 .register();
     }
 
-    public void executePlayer(Player player, Object[] args) {
+    public void executePlayer(Player player, Object[] args) throws WrapperCommandSyntaxException {
         // 检查玩家是否被禁言
         if (StackPun.api().profileManager().getProfile(player).muted) {
             // 如果被禁言，拦截操作并提示
-            StackCommand.sendErrorLoc(player, StackCommand.MESSAGE_MUTED);
+            StackCommand.failLoc(StackCommand.MESSAGE_MUTED);
             return;
         }
 

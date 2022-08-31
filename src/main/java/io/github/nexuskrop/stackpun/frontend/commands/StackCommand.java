@@ -6,6 +6,8 @@
 
 package io.github.nexuskrop.stackpun.frontend.commands;
 
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import io.github.nexuskrop.stackpun.StackPun;
 import io.github.nexuskrop.stackpun.util.Common;
 import net.kyori.adventure.text.Component;
@@ -87,6 +89,14 @@ public interface StackCommand {
 
     static void sendErrorLoc(CommandSender target, String id) {
         target.sendMessage(StackPun.api().messageManager().getComp(id).color(NamedTextColor.RED));
+    }
+
+    static void failLoc(String id) throws WrapperCommandSyntaxException {
+        throw CommandAPI.fail(loc(id));
+    }
+
+    static String loc(String id) {
+        return StackPun.api().messageManager().get(id);
     }
 
     static void sendErrorVal(CommandSender target, String id, Component val) {

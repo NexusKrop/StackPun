@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun.frontend.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
+import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import io.github.nexuskrop.stackpun.StackPun;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -30,18 +31,18 @@ public class UnmuteCommand implements StackCommand {
                 .register();
     }
 
-    public void execute(CommandSender sender, Object[] args) {
+    public void execute(CommandSender sender, Object[] args) throws WrapperCommandSyntaxException {
         var player = (Player) args[0];
         var profile = StackPun.api().profileManager().getProfile(player);
 
         if (!profile.muted) {
-            StackCommand.sendErrorLoc(sender, NOT_MUTED);
+            StackCommand.failLoc(NOT_MUTED);
             return;
         }
 
         if (player == sender) {
             if (!player.hasPermission(UNMUTE_SELF_PERM)) {
-                StackCommand.sendErrorLoc(sender, UNMUTE_SELF_DENIED);
+                StackCommand.failLoc(UNMUTE_SELF_DENIED);
                 return;
             }
         }
