@@ -10,6 +10,7 @@ import io.github.nexuskrop.stackpun.data.ProfileManager;
 import io.github.nexuskrop.stackpun.frontend.CommandManager;
 import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
 import io.github.nexuskrop.stackpun.players.ChatManager;
+import io.github.nexuskrop.stackpun.players.PlayerManager;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.jetbrains.annotations.Nullable;
@@ -48,6 +49,13 @@ public interface IStackPun {
      * @return An instance of {@link MessageManager}. Will always return the same instance.
      */
     MessageManager messageManager();
+
+    /**
+     * Gets a shared instance of the {@link PlayerManager}.
+     *
+     * @return An instance of {@link PlayerManager}. Will always return the same instance.
+     */
+    PlayerManager playerManager();
 
     /**
      * Gets the overworld.

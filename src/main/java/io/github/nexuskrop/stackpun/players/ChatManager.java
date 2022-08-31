@@ -17,6 +17,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public final class ChatManager implements Listener {
+    private static final String SILENCED = "chat.silenced";
+
     private final StackPun plugin;
     private final String chatFormat = "<dark_gray>[<dim>]</dark_gray> [<player_name>] <gray><message>";
 
@@ -37,16 +39,22 @@ public final class ChatManager implements Listener {
             return;
         }
 
+        if (profile.silenced) {
+            StackCommand.sendErrorLoc(player, SILENCED);
+            event.setCancelled(true);
+            return;
+        }
+
         var comp = MiniMessage.miniMessage().deserialize(chatFormat,
                 Placeholder.unparsed("dim", Common.getEntityDimText(event.getPlayer())),
                 Placeholder.component("player_name", player.displayName()),
                 Placeholder.component("message", event.message()));
 
+        var manager = StackPun.api().playerManager();
+
         for (var target :
                 Bukkit.getServer().getOnlinePlayers()) {
-            if (!profile.blockedPlayers.contains(target.getUniqueId())) {
-                target.sendMessage(comp);
-            }
+            manager.sendChatMessage(player, target, comp);
         }
 
         Bukkit.getServer().sendMessage(comp);

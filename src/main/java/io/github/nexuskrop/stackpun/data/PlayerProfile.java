@@ -21,6 +21,8 @@ public class PlayerProfile {
 
     public final String name;
     public boolean muted;
+    public boolean deafened;
+    public boolean silenced;
     public boolean wasModded;
     public boolean wasNotifiedForModded;
     public List<UUID> blockedPlayers = new ArrayList<>();

@@ -35,8 +35,6 @@ jobs:
             - v1-dependencies-{{ checksum "pom.xml" }} # appends cache key with a hash of pom.xml file
             - v1-dependencies- # fallback in case previous cache key is not found
       - run: mvn package
-      - store_artifacts:
-          path: target/StackPun-*.jar
       - save_cache:
           paths:
             - ~/.m2

@@ -7,7 +7,7 @@
 package io.github.nexuskrop.stackpun.players;
 
 import io.github.nexuskrop.stackpun.StackPun;
-import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -53,10 +53,25 @@ public final class PlayerManager implements Listener {
     }
 
     private void notifyModded(Player player) {
-        StackCommand.sendMessageLoc(player, MODDED_WARNING_1);
-        StackCommand.sendMessageLoc(player, MODDED_WARNING_2);
-        StackCommand.sendMessageVal(player, MODDED_WARNING_3, player.getClientBrandName());
-        StackCommand.sendMessageLoc(player, MODDED_WARNING_4);
-        StackCommand.sendMessageLoc(player, MODDED_WARNING_5);
+        // nullsubbed due to some serious issues
+    }
+
+    /**
+     * Sends a chat message to the target. If target is deafened or either source or target blocked
+     * each other, the method fails silently.
+     *
+     * @param source  The source of the message.
+     * @param target  The target of the message.
+     * @param message The message.
+     */
+    public void sendChatMessage(Player source, Player target, Component message) {
+        var profile = StackPun.api().profileManager().getProfile(source);
+        var selfProfile = StackPun.api().profileManager().getProfile(target);
+
+        // 是否没有被拉黑，接收者也没有deafened
+        if (!selfProfile.deafened || !profile.blockedPlayers.contains(target.getUniqueId())
+                || !selfProfile.blockedPlayers.contains(source.getUniqueId())) {
+            target.sendMessage(message);
+        }
     }
 }

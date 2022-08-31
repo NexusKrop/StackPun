@@ -67,6 +67,11 @@ public class StackPun extends JavaPlugin implements IStackPun {
     }
 
     @Override
+    public PlayerManager playerManager() {
+        return playerManager;
+    }
+
+    @Override
     @Nullable
     public World overWorld() {
         return null;
