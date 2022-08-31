@@ -30,6 +30,6 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-      - run: mvn verify
+      - run: mvn package
       - store_artifacts:
           path: target/StackPun-*.jar
