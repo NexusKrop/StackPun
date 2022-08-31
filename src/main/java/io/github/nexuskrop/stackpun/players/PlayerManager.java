@@ -7,6 +7,7 @@
 package io.github.nexuskrop.stackpun.players;
 
 import io.github.nexuskrop.stackpun.StackPun;
+import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,6 +37,11 @@ public final class PlayerManager implements Listener {
         plugin.getSLF4JLogger().info("Player {} joined with client {}", player.getName(), player.getClientBrandName());
         // 创建资料
         var profile = plugin.profileManager().getProfile(player);
+
+        if (!profile.hadWelcomed) {
+            profile.hadWelcomed = true;
+            StackCommand.sendMessageLoc(player, "frontend.welcome");
+        }
 
         if (profile.wasModded && Objects.equals(player.getClientBrandName(), "vanilla")) {
             plugin.getSLF4JLogger().info("Player {} client no longer modded", player.getName());
