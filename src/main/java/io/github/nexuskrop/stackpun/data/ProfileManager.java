@@ -29,7 +29,7 @@ import java.util.UUID;
  */
 public final class ProfileManager {
     private final StackPun plugin;
-    private final String profileSet = "profiles.json";
+    private static final String PROFILES_JSON = "profiles.json";
     private Map<UUID, PlayerProfile> profiles;
     private File profileFile;
 
@@ -55,7 +55,7 @@ public final class ProfileManager {
             prohibitWrite = true;
         }
 
-        profileFile = new File(plugin.getDataFolder(), profileSet);
+        profileFile = new File(plugin.getDataFolder(), PROFILES_JSON);
 
         if (profileFile.exists()) {
             try (var input = new FileReader(profileFile)) {
@@ -102,17 +102,6 @@ public final class ProfileManager {
      */
     public boolean prohibitWrite() {
         return prohibitWrite;
-    }
-
-    public void ensureProfile(@NotNull Player player) {
-        // 提前获取UUID
-        var uuid = Objects.requireNonNull(player).getUniqueId();
-
-        if (!profiles.containsKey(uuid)) {
-            // 如果没有现存实例，创建新的实例
-            var result = new PlayerProfile(player.getName());
-            profiles.put(uuid, result);
-        }
     }
 
     public PlayerProfile getProfile(@NotNull Player player) {

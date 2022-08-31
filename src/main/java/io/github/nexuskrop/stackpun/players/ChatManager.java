@@ -20,7 +20,7 @@ public final class ChatManager implements Listener {
     private static final String SILENCED = "chat.silenced";
 
     private final StackPun plugin;
-    private final String chatFormat = "<dark_gray>[<dim>]</dark_gray> [<player_name>] <gray><message>";
+    private static final String CHAT_FORMAT = "<dark_gray>[<dim>]</dark_gray> [<player_name>] <gray><message>";
 
     public ChatManager(StackPun self) {
         plugin = self;
@@ -45,7 +45,7 @@ public final class ChatManager implements Listener {
             return;
         }
 
-        var comp = MiniMessage.miniMessage().deserialize(chatFormat,
+        var comp = MiniMessage.miniMessage().deserialize(CHAT_FORMAT,
                 Placeholder.unparsed("dim", Common.getEntityDimText(event.getPlayer())),
                 Placeholder.component("player_name", player.displayName()),
                 Placeholder.component("message", event.message()));

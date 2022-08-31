@@ -29,10 +29,6 @@ public interface StackCommand {
     String MESSAGE_MUTED_NO = "commands.generic.muted.no";
     String MESSAGE_SPECIFY_SELF_FAILURE = "commands.generic.self_specify_failure";
 
-    static void sendError(CommandSender target, Component error) {
-        target.sendMessage(error.color(NamedTextColor.RED));
-    }
-
     static void sendSuccess(CommandSender target, Component component) {
         if (isFeedbackEnabled()) {
             target.sendMessage(component);
@@ -98,12 +94,6 @@ public interface StackCommand {
     static String loc(String id) {
         return StackPun.api().messageManager().get(id);
     }
-
-    static void sendErrorVal(CommandSender target, String id, Component val) {
-        target.sendMessage(MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(id),
-                Placeholder.component("value", val)));
-    }
-
 
     static void sendMessageLoc(CommandSender target, String id) {
         target.sendRichMessage(StackPun.api().messageManager().get(id));
