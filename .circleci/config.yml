@@ -31,3 +31,5 @@ jobs:
     steps:
       - checkout
       - run: mvn verify
+      - store_artifacts:
+          path: target/StackPun-*.jar
