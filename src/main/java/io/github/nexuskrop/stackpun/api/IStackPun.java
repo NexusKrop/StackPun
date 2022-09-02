@@ -6,6 +6,7 @@
 
 package io.github.nexuskrop.stackpun.api;
 
+import io.github.nexuskrop.stackpun.ConfigManager;
 import io.github.nexuskrop.stackpun.data.ProfileManager;
 import io.github.nexuskrop.stackpun.frontend.CommandManager;
 import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
@@ -64,6 +65,8 @@ public interface IStackPun {
      */
     @Nullable
     World overWorld();
+
+    ConfigManager configManager();
 
     /**
      * Gets whether a game rule is enabled.

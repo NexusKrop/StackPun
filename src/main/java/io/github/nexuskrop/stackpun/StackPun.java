@@ -36,6 +36,7 @@ public class StackPun extends JavaPlugin implements IStackPun {
     private ProfileManager profileManager;
     private PlayerManager playerManager;
     private World overWorld;
+    private ConfigManager configManager;
 
     private MessageManager messageManager;
 
@@ -64,6 +65,10 @@ public class StackPun extends JavaPlugin implements IStackPun {
 
     public MessageManager messageManager() {
         return messageManager;
+    }
+
+    public ConfigManager configManager() {
+        return configManager;
     }
 
     @Override
@@ -101,6 +106,9 @@ public class StackPun extends JavaPlugin implements IStackPun {
     @Override
     public void onEnable() {
         setInstance(this);
+        this.saveDefaultConfig();
+
+        configManager = new ConfigManager(this);
         overWorld = this.getServer().getWorld("overworld");
 
         getSLF4JLogger().info("StackPun Service instantiated");

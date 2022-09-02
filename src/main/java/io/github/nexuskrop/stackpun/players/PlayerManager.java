@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun.players;
 
 import io.github.nexuskrop.stackpun.StackPun;
 import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
+import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -52,6 +53,17 @@ public final class PlayerManager implements Listener {
         if (!selfProfile.deafened || !profile.blockedPlayers.contains(target.getUniqueId())
                 || !selfProfile.blockedPlayers.contains(source.getUniqueId())) {
             target.sendMessage(message);
+        }
+    }
+
+    public void sendIdentifiedMessage(Player source, Player target, Component message, Identity identity) {
+        var profile = StackPun.api().profileManager().getProfile(source);
+        var selfProfile = StackPun.api().profileManager().getProfile(target);
+
+        // 是否没有被拉黑，接收者也没有deafened
+        if (!selfProfile.deafened || !profile.blockedPlayers.contains(target.getUniqueId())
+                || !selfProfile.blockedPlayers.contains(source.getUniqueId())) {
+            target.sendMessage(identity, message);
         }
     }
 }
