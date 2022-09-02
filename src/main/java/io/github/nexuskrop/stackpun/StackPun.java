@@ -141,6 +141,7 @@ public class StackPun extends JavaPlugin implements IStackPun {
         commandManager.registerCommand(new IgnoreCommand());
         commandManager.registerCommand(new DeafenCommand());
         commandManager.registerCommand(new SilenceCommand());
+        commandManager.registerCommand(new StackPunCommand());
     }
 
     /**

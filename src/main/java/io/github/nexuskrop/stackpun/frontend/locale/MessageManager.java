@@ -69,6 +69,13 @@ public final class MessageManager {
         }
     }
 
+    public void reload() {
+        logger.info("Reloading MessageManager");
+
+        messages.clear();
+        tryInit();
+    }
+
     public void saveMessagesToDisk() {
         try (var output = new FileWriter(messagesFile)) {
             messages.store(output, "Messages file");
