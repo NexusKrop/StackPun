@@ -17,6 +17,7 @@ import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
+import x.nexuskrop.stackpun.net.StatusListener;
 
 import java.io.File;
 
@@ -134,6 +135,10 @@ public class StackPun extends JavaPlugin implements IStackPun {
         commandManager = new CommandManager();
         // TODO: 反射解析自动注册
         initCommands();
+
+        var listener = new StatusListener(this.getSLF4JLogger());
+        getServer().getPluginManager().registerEvents(listener, this);
+        configManager.addMonitored(listener);
     }
 
     /**

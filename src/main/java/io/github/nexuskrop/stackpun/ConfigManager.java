@@ -7,9 +7,15 @@
 package io.github.nexuskrop.stackpun;
 
 import org.bukkit.configuration.Configuration;
+import x.nexuskrop.stackpun.util.IReloadable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public final class ConfigManager {
     private final StackPun plugin;
+    private final List<IReloadable> monitoring = new ArrayList<>();
 
     ConfigManager(StackPun stackPun) {
         this.plugin = stackPun;
@@ -19,6 +25,13 @@ public final class ConfigManager {
         plugin.reloadConfig();
 
         plugin.chatManager().clearCache();
+        for (var monitored : monitoring) {
+            monitored.reload();
+        }
+    }
+
+    public void addMonitored(IReloadable reloadable) {
+        monitoring.add(Objects.requireNonNull(reloadable));
     }
 
     public Configuration getConfig() {

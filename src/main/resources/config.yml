@@ -2,3 +2,5 @@ chat:
   format: '<dark_gray>[<dim>]</dark_gray> [<player_name>] <gray><message>'
   # 注意这里即使把 Identity 传过去也举报不了，因为我们服务端是没有给消息数字签名的
   pass-identity: false
+server-list:
+  motd: '<red>StackPun</red> <green>Test Server</green>'
