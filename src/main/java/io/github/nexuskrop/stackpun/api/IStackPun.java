@@ -8,13 +8,13 @@ package io.github.nexuskrop.stackpun.api;
 
 import io.github.nexuskrop.stackpun.ConfigManager;
 import io.github.nexuskrop.stackpun.data.ProfileManager;
-import io.github.nexuskrop.stackpun.frontend.CommandManager;
 import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
 import io.github.nexuskrop.stackpun.players.ChatManager;
 import io.github.nexuskrop.stackpun.players.PlayerManager;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.jetbrains.annotations.Nullable;
+import x.nexuskrop.stackpun.commands.CommandManager;
 
 /**
  * Represents the API interface for StackPun plugin.
@@ -24,11 +24,18 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface IStackPun {
     /**
-     * Gets a shared instance of the {@link CommandManager}.
+     * Gets a shared instance of the first-generation command manager.
      *
-     * @return An instance of {@link CommandManager}. Will always return the same instance.
+     * @return An instance of the first-generation command manager. Will always return the same instance.
      */
-    CommandManager commandManager();
+    io.github.nexuskrop.stackpun.frontend.CommandManager commandManager();
+
+    /**
+     * Gets a shared instance of the second generation command manager.
+     *
+     * @return An instanceof the second-generation command manager. Will always return the same instance.
+     */
+    CommandManager commandManagerV2();
 
     /**
      * Gets a shared instance of the {@link ChatManager}.

@@ -31,7 +31,8 @@ import java.io.File;
 public class StackPun extends JavaPlugin implements IStackPun {
     private static StackPun _instance;
 
-    private CommandManager commandManager;
+    private io.github.nexuskrop.stackpun.frontend.CommandManager commandManager;
+    private x.nexuskrop.stackpun.commands.CommandManager commandManagerV2;
     private ChatManager chatManager;
     private ProfileManager profileManager;
     private PlayerManager playerManager;
@@ -55,8 +56,13 @@ public class StackPun extends JavaPlugin implements IStackPun {
     }
 
 
-    public CommandManager commandManager() {
+    public io.github.nexuskrop.stackpun.frontend.CommandManager commandManager() {
         return commandManager;
+    }
+
+    @Override
+    public x.nexuskrop.stackpun.commands.CommandManager commandManagerV2() {
+        return commandManagerV2;
     }
 
     public ProfileManager profileManager() {
@@ -121,6 +127,9 @@ public class StackPun extends JavaPlugin implements IStackPun {
         profileManager.init();
 
         playerManager = new PlayerManager(this);
+
+        commandManagerV2 = new x.nexuskrop.stackpun.commands.CommandManager(this.getSLF4JLogger());
+        commandManagerV2.addFromProject();
 
         commandManager = new CommandManager();
         // TODO: 反射解析自动注册

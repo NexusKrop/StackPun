@@ -1,3 +1,7 @@
 {
-  "version": "0.1.0-alpha"
+  "version": "0.1.0-alpha",
+  "commandPackage": "x.nexuskrop.stackpun.commands.impl",
+  "commands": [
+    "V2TestCommand"
+  ]
 }
