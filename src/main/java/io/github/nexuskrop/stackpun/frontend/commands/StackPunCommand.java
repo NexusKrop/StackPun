@@ -17,10 +17,12 @@ public class StackPunCommand implements StackCommand {
     @Override
     public void register() {
         new CommandAPICommand("stackpun")
+                .withHelp("StackPun command", "The general configuration command for StackPun")
                 .withSubcommand(new CommandAPICommand("reload")
                         .withPermission("stackpun.commands.reload")
                         .withHelp("Reloads the config and messages", "Reloads all configuration and messages file.")
-                        .executes(this::reloadExecute));
+                        .executes(this::reloadExecute))
+                .register();
     }
 
     private void reloadExecute(CommandSender sender, Object[] args) {
