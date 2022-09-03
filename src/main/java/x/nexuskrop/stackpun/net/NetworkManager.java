@@ -20,7 +20,4 @@ public class NetworkManager {
     public NetworkManager(StackPun self) {
         plugin = self;
     }
-
-    public void hook() {
-    }
 }

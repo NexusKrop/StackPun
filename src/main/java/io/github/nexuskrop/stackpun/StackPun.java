@@ -128,6 +128,7 @@ public class StackPun extends JavaPlugin implements IStackPun {
         profileManager.init();
 
         playerManager = new PlayerManager(this);
+        configManager.addMonitored(playerManager);
 
         commandManagerV2 = new x.nexuskrop.stackpun.commands.CommandManager(this.getSLF4JLogger());
         commandManagerV2.addFromProject();

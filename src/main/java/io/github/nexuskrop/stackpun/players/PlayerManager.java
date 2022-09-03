@@ -16,13 +16,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import x.nexuskrop.stackpun.util.IReloadable;
 
-public final class PlayerManager implements Listener {
+public final class PlayerManager implements Listener, IReloadable {
     private final StackPun plugin;
+    private Component listHeader;
 
     public PlayerManager(StackPun self) {
         plugin = self;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        reload();
     }
 
     @EventHandler
@@ -37,6 +40,8 @@ public final class PlayerManager implements Listener {
             profile.hadWelcomed = true;
             StackCommand.sendMessageLoc(player, "frontend.welcome");
         }
+
+        player.sendPlayerListHeader(listHeader);
     }
 
     @EventHandler
@@ -79,5 +84,10 @@ public final class PlayerManager implements Listener {
                 && !selfProfile.blockedPlayers.contains(source.getUniqueId())) {
             target.sendMessage(identity, message);
         }
+    }
+
+    @Override
+    public void reload() {
+        var raw = StackPun.api().messageManager().getMini("ui.player_list.header");
     }
 }
