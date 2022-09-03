@@ -8,7 +8,6 @@ package io.github.nexuskrop.stackpun;
 
 import io.github.nexuskrop.stackpun.api.IStackPun;
 import io.github.nexuskrop.stackpun.data.ProfileManager;
-import io.github.nexuskrop.stackpun.frontend.CommandManager;
 import io.github.nexuskrop.stackpun.frontend.commands.*;
 import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
 import io.github.nexuskrop.stackpun.players.ChatManager;
@@ -33,7 +32,6 @@ import java.io.File;
 public class StackPun extends JavaPlugin implements IStackPun {
     private static StackPun _instance;
 
-    private io.github.nexuskrop.stackpun.frontend.CommandManager commandManager;
     private x.nexuskrop.stackpun.commands.CommandManager commandManagerV2;
     private ChatManager chatManager;
     private ProfileManager profileManager;
@@ -56,11 +54,6 @@ public class StackPun extends JavaPlugin implements IStackPun {
      */
     public static IStackPun api() {
         return _instance;
-    }
-
-
-    public io.github.nexuskrop.stackpun.frontend.CommandManager commandManager() {
-        return commandManager;
     }
 
     @Override
@@ -141,9 +134,7 @@ public class StackPun extends JavaPlugin implements IStackPun {
         commandManagerV2 = new x.nexuskrop.stackpun.commands.CommandManager(this.getSLF4JLogger());
         commandManagerV2.addFromProject();
 
-        commandManager = new CommandManager();
-        // TODO: 反射解析自动注册
-        initCommands();
+        legacyCommandsAdd();
 
         var listener = new StatusListener(this.getSLF4JLogger());
         getServer().getPluginManager().registerEvents(listener, this);
@@ -153,18 +144,20 @@ public class StackPun extends JavaPlugin implements IStackPun {
     /**
      * Register all commands in the command manager.
      */
-    public void initCommands() {
-        commandManager.registerCommand(new BlipCommand());
-        commandManager.registerCommand(new UnmuteCommand());
-        commandManager.registerCommand(new MuteCommand());
-        commandManager.registerCommand(new SaveProfilesCommand());
-        commandManager.registerCommand(new SetSpawnCommand());
-        commandManager.registerCommand(new SpawnCommand());
-        commandManager.registerCommand(new WhoAmICommand());
-        commandManager.registerCommand(new IgnoreCommand());
-        commandManager.registerCommand(new DeafenCommand());
-        commandManager.registerCommand(new SilenceCommand());
-        commandManager.registerCommand(new StackPunCommand());
+    public void legacyCommandsAdd() {
+        commandManagerV2.addLegacy(BlipCommand.class,
+                UnmuteCommand.class,
+                MuteCommand.class,
+                SaveProfilesCommand.class,
+                SetSpawnCommand.class,
+                SaveProfilesCommand.class,
+                SpawnCommand.class,
+                SetSpawnCommand.class,
+                WhoAmICommand.class,
+                IgnoreCommand.class,
+                DeafenCommand.class,
+                SilenceCommand.class,
+                StackPunCommand.class);
     }
 
     /**

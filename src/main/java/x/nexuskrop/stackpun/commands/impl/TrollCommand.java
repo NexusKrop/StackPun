@@ -18,8 +18,7 @@ import x.nexuskrop.stackpun.commands.annotations.PunCommandInfo;
 public class TrollCommand implements PunCommand {
     @Override
     public void initialise(CommandAPICommand command) {
-        command.withPermission("stackpun.commands.troll")
-                .withArguments(new PlayerArgument("victim"))
+        command.withArguments(new PlayerArgument("victim"))
                 .executes((sender, args) -> {
                     var player = (Player) args[0];
                     StackPun.api().networkManager().sendDemoScreen(player);

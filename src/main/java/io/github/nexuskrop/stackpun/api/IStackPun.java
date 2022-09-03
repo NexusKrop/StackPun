@@ -25,13 +25,6 @@ import x.nexuskrop.stackpun.net.NetworkManager;
  */
 public interface IStackPun {
     /**
-     * Gets a shared instance of the first-generation command manager.
-     *
-     * @return An instance of the first-generation command manager. Will always return the same instance.
-     */
-    io.github.nexuskrop.stackpun.frontend.CommandManager commandManager();
-
-    /**
      * Gets a shared instance of the second generation command manager.
      *
      * @return An instanceof the second-generation command manager. Will always return the same instance.

@@ -7,6 +7,7 @@
 package x.nexuskrop.stackpun.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
+import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
 import io.github.nexuskrop.stackpun.util.Common;
 import org.slf4j.Logger;
 import x.nexuskrop.stackpun.commands.annotations.PunCommandInfo;
@@ -25,6 +26,30 @@ public class CommandManager {
 
     public final List<PunCommand> commandList = new ArrayList<>();
 
+    public void addLegacy(Class<?> command) {
+        if (!StackCommand.class.isAssignableFrom(Objects.requireNonNull(command))) {
+            complain("it is not a legacy command", command);
+            return;
+        }
+
+        try {
+            var legacyCommand = (StackCommand) command.getConstructor().newInstance();
+            legacyCommand.register();
+            log.info("Registered legacy command {}", command.getSimpleName());
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException ex) {
+            complain("the legacy command does not have a default public constructor", command);
+        } catch (InvocationTargetException e) {
+            log.warn("Failed to create command {}", command.getSimpleName());
+            log.warn("Unknown error", e);
+        }
+    }
+
+    public void addLegacy(Class<?>... command) {
+        for (var cmd : command) {
+            addLegacy(cmd);
+        }
+    }
+
     public void add(Class<?> command) {
         // 检查参数非空和目标有 PunCommandInfo 注解
         var anno = Objects.requireNonNull(command).getAnnotation(PunCommandInfo.class);
@@ -42,7 +67,8 @@ public class CommandManager {
         }
 
         // 创建 CommandAPI 实例
-        var apiCommand = new CommandAPICommand(anno.name());
+        var apiCommand = new CommandAPICommand(anno.name())
+                .withPermission(String.format("stackpun.commands.%s", anno.name()));
 
         try {
             // 创建选中命令的实例
