@@ -38,3 +38,12 @@ permissions:
   stackpun.commands.ignore.as-op:
     default: op
     description: Recognised as operator by ignore command
+  stackpun.commands.troll:
+    default: op
+    description: troll player
+  stackpun.commands.deafen:
+    default: true
+    description: deafen yourself
+  stackpun.commands.silence:
+    default: true
+    description: silence yourself

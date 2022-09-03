@@ -17,6 +17,7 @@ import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
+import x.nexuskrop.stackpun.net.NetworkManager;
 import x.nexuskrop.stackpun.net.StatusListener;
 
 import java.io.File;
@@ -39,6 +40,7 @@ public class StackPun extends JavaPlugin implements IStackPun {
     private PlayerManager playerManager;
     private World overWorld;
     private ConfigManager configManager;
+    private NetworkManager networkManager;
 
     private MessageManager messageManager;
 
@@ -81,6 +83,10 @@ public class StackPun extends JavaPlugin implements IStackPun {
     @Override
     public PlayerManager playerManager() {
         return playerManager;
+    }
+
+    public NetworkManager networkManager() {
+        return networkManager;
     }
 
     @Override
@@ -129,6 +135,8 @@ public class StackPun extends JavaPlugin implements IStackPun {
 
         playerManager = new PlayerManager(this);
         configManager.addMonitored(playerManager);
+
+        networkManager = new NetworkManager(this);
 
         commandManagerV2 = new x.nexuskrop.stackpun.commands.CommandManager(this.getSLF4JLogger());
         commandManagerV2.addFromProject();
