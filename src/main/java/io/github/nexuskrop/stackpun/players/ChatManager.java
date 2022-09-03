@@ -84,8 +84,6 @@ public final class ChatManager implements Listener {
             } else {
                 manager.sendChatMessage(player, target, comp);
             }
-
-            manager.sendChatMessage(player, target, comp);
         }
 
         Bukkit.getServer().sendMessage(comp);

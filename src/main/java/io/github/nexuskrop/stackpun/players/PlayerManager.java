@@ -46,6 +46,8 @@ public final class PlayerManager implements Listener {
      * @param message The message.
      */
     public void sendChatMessage(Player source, Player target, Component message) {
+        if (source == target) return; // See STAP-17
+
         var profile = StackPun.api().profileManager().getProfile(source);
         var selfProfile = StackPun.api().profileManager().getProfile(target);
 
@@ -57,6 +59,8 @@ public final class PlayerManager implements Listener {
     }
 
     public void sendIdentifiedMessage(Player source, Player target, Component message, Identity identity) {
+        if (source == target) return; // See STAP-17
+
         var profile = StackPun.api().profileManager().getProfile(source);
         var selfProfile = StackPun.api().profileManager().getProfile(target);
 
