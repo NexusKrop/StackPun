@@ -6,6 +6,7 @@
 
 package io.github.nexuskrop.stackpun.players;
 
+import com.destroystokyo.paper.ClientOption;
 import io.github.nexuskrop.stackpun.StackPun;
 import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
 import io.github.nexuskrop.stackpun.util.Common;
@@ -20,6 +21,7 @@ import java.util.Objects;
 
 public final class ChatManager implements Listener {
     private static final String SILENCED = "chat.silenced";
+    private static final String VISIBILITY_OFF = "chat.visibility_off";
     private String formatCache;
     private Boolean passIdentityCache;
 
@@ -56,6 +58,12 @@ public final class ChatManager implements Listener {
         // TODO 解除 chatFormat 硬编码
         var player = event.getPlayer();
         var profile = plugin.profileManager().getProfile(player);
+
+        if (profile.chatVisibility != ClientOption.ChatVisibility.FULL) {
+            StackCommand.sendErrorLoc(player, VISIBILITY_OFF);
+            event.setCancelled(true);
+            return;
+        }
 
         if (profile.muted) {
             StackCommand.sendErrorLoc(player, StackCommand.MESSAGE_MUTED);

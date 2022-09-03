@@ -6,12 +6,14 @@
 
 package io.github.nexuskrop.stackpun.frontend.commands;
 
+import com.destroystokyo.paper.ClientOption;
 import dev.jorel.commandapi.CommandAPICommand;
 import io.github.nexuskrop.stackpun.StackPun;
 
 public class DeafenCommand implements StackCommand {
     private static final String SUCCESS_ON = "commands.deafen.success_on";
     private static final String SUCCESS_OFF = "commands.deafen.success_off";
+    private static final String CHAT_OFF = "commands.deafen.chat_off";
 
     @Override
     public void register() {
@@ -20,6 +22,11 @@ public class DeafenCommand implements StackCommand {
                 .withHelp("Deafen yourself", "Deafens yourself.")
                 .executesPlayer((sender, args) -> {
                     var profile = StackPun.api().profileManager().getProfile(sender);
+
+                    if (profile.chatVisibility != ClientOption.ChatVisibility.FULL) {
+                        StackCommand.failLoc(CHAT_OFF);
+                        return;
+                    }
 
                     if (profile.deafened) {
                         profile.deafened = false;

@@ -6,6 +6,8 @@
 
 package io.github.nexuskrop.stackpun.data;
 
+import com.destroystokyo.paper.ClientOption;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,4 +29,6 @@ public class PlayerProfile {
     public boolean wasModded;
     public boolean wasNotifiedForModded;
     public List<UUID> blockedPlayers = new ArrayList<>();
+
+    public transient ClientOption.ChatVisibility chatVisibility = ClientOption.ChatVisibility.FULL;
 }

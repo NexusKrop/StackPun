@@ -6,6 +6,8 @@
 
 package io.github.nexuskrop.stackpun.players;
 
+import com.destroystokyo.paper.ClientOption;
+import com.destroystokyo.paper.event.player.PlayerClientOptionsChangeEvent;
 import io.github.nexuskrop.stackpun.StackPun;
 import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
 import net.kyori.adventure.identity.Identity;
@@ -37,6 +39,14 @@ public final class PlayerManager implements Listener {
         }
     }
 
+    @EventHandler
+    public void onOptionChange(PlayerClientOptionsChangeEvent event) {
+        var player = event.getPlayer();
+        var profile = StackPun.api().profileManager().getProfile(player);
+
+        profile.chatVisibility = event.getChatVisibility();
+    }
+
     /**
      * Sends a chat message to the target. If target is deafened or either source or target blocked
      * each other, the method fails silently.
@@ -52,8 +62,8 @@ public final class PlayerManager implements Listener {
         var selfProfile = StackPun.api().profileManager().getProfile(target);
 
         // 是否没有被拉黑，接收者也没有deafened
-        if (!selfProfile.deafened || !profile.blockedPlayers.contains(target.getUniqueId())
-                || !selfProfile.blockedPlayers.contains(source.getUniqueId())) {
+        if (selfProfile.chatVisibility == ClientOption.ChatVisibility.FULL && !selfProfile.deafened && !profile.blockedPlayers.contains(target.getUniqueId())
+                && !selfProfile.blockedPlayers.contains(source.getUniqueId())) {
             target.sendMessage(message);
         }
     }
@@ -65,8 +75,8 @@ public final class PlayerManager implements Listener {
         var selfProfile = StackPun.api().profileManager().getProfile(target);
 
         // 是否没有被拉黑，接收者也没有deafened
-        if (!selfProfile.deafened || !profile.blockedPlayers.contains(target.getUniqueId())
-                || !selfProfile.blockedPlayers.contains(source.getUniqueId())) {
+        if (selfProfile.chatVisibility == ClientOption.ChatVisibility.FULL && !selfProfile.deafened && !profile.blockedPlayers.contains(target.getUniqueId())
+                && !selfProfile.blockedPlayers.contains(source.getUniqueId())) {
             target.sendMessage(identity, message);
         }
     }
