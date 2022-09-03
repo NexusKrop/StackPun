@@ -3,6 +3,7 @@
   "commandPackage": "x.nexuskrop.stackpun.commands.impl",
   "commands": [
     "V2TestCommand",
-    "TrollCommand"
+    "TrollCommand",
+    "ItRenameCommand"
   ]
 }
