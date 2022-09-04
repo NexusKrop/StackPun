@@ -15,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import x.nexuskrop.stackpun.commands.PunCommand;
 import x.nexuskrop.stackpun.commands.annotations.PunCommandInfo;
+import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 @PunCommandInfo(name = "itrename")
 public class ItRenameCommand implements PunCommand {
@@ -41,6 +42,6 @@ public class ItRenameCommand implements PunCommand {
 
         handStack.getItemMeta().displayName(LegacyComponentSerializer.legacy('&')
                 .deserialize(target));
-        StackCommand.sendSuccessLoc(sender, SUCCESS);
+        CommandSenders.sendSuccess(sender, SUCCESS);
     }
 }

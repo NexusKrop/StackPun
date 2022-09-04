@@ -11,9 +11,14 @@ import io.github.nexuskrop.stackpun.StackPun;
 import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
 import io.github.nexuskrop.stackpun.util.Common;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -97,5 +102,29 @@ public final class ChatManager implements Listener {
         Bukkit.getServer().sendMessage(comp);
 
         event.setCancelled(true);
+    }
+
+    public void broadcastSuccess(CommandSender source, Component component) {
+        // 合成消息（chat.type.admin）
+        var msg = Component.translatable("chat.type.admin")
+                .args(source.name(), component).color(NamedTextColor.GRAY)
+                .decorate(TextDecoration.ITALIC);
+
+        // 检查游戏规则 sendCommandFeedback 是否启用
+        if (StackPun.api().isGameRuleEnabled(GameRule.SEND_COMMAND_FEEDBACK, true)) {
+            // 如果启用，遍历所有人
+            for (var player :
+                    Bukkit.getServer().getOnlinePlayers()) {
+                // 有权限且不是命令的执行者
+                if (!player.getName().equals(source.getName()) && player.hasPermission("stackpun.commands.generic.broadcast")) {
+                    // 发送消息
+                    player.sendMessage(msg);
+                }
+            }
+
+            if (!Bukkit.getServer().equals(source)) {
+                Bukkit.getServer().sendMessage(msg);
+            }
+        }
     }
 }

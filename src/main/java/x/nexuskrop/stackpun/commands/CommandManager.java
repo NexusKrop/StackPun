@@ -7,6 +7,7 @@
 package x.nexuskrop.stackpun.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
+import io.github.nexuskrop.stackpun.StackPun;
 import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
 import io.github.nexuskrop.stackpun.util.Common;
 import org.slf4j.Logger;
@@ -66,9 +67,13 @@ public class CommandManager {
             return;
         }
 
+        var msgManager = StackPun.api().messageManager();
+
         // 创建 CommandAPI 实例
         var apiCommand = new CommandAPICommand(anno.name())
-                .withPermission(String.format("stackpun.commands.%s", anno.name()));
+                .withPermission(String.format("stackpun.commands.%s", anno.name()))
+                .withHelp(msgManager.get(String.format("stackpun.commands.%s.help_short", anno.name())),
+                        msgManager.get(String.format("stackpun.commands.%s.help_full", anno.name())));
 
         try {
             // 创建选中命令的实例

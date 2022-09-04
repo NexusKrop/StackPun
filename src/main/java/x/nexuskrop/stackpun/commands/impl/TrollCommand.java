@@ -9,10 +9,10 @@ package x.nexuskrop.stackpun.commands.impl;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import io.github.nexuskrop.stackpun.StackPun;
-import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
 import org.bukkit.entity.Player;
 import x.nexuskrop.stackpun.commands.PunCommand;
 import x.nexuskrop.stackpun.commands.annotations.PunCommandInfo;
+import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 @PunCommandInfo(name = "troll")
 public class TrollCommand implements PunCommand {
@@ -23,7 +23,7 @@ public class TrollCommand implements PunCommand {
                     var player = (Player) args[0];
                     StackPun.api().networkManager().sendDemoScreen(player);
 
-                    StackCommand.sendSuccessLoc(sender, "commands.generic.success");
+                    CommandSenders.sendSuccess(sender, "commands.generic.success");
                 });
     }
 }
