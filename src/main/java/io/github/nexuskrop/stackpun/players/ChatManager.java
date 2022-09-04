@@ -116,7 +116,7 @@ public final class ChatManager implements Listener {
             for (var player :
                     Bukkit.getServer().getOnlinePlayers()) {
                 // 有权限且不是命令的执行者
-                if (!player.getName().equals(source.getName()) && player.hasPermission("stackpun.commands.generic.broadcast")) {
+                if (!source.equals(player) && player.hasPermission("stackpun.commands.generic.broadcast")) {
                     // 发送消息
                     player.sendMessage(msg);
                 }

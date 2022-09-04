@@ -17,6 +17,9 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 
 public final class Common {
+    public static final String AUTHOR = "NexusKrop Project";
+    public static final String APP_NAME = "StackPun";
+
     private Common() {
     }
 
