@@ -34,7 +34,7 @@ public final class PlayerManager implements Listener, IReloadable {
 
         plugin.getSLF4JLogger().info("Player {} joined with client {}", player.getName(), player.getClientBrandName());
         // 创建资料
-        var profile = plugin.profileManager().getProfile(player);
+        var profile = plugin.profileManager().get(player);
 
         if (!profile.hadWelcomed) {
             profile.hadWelcomed = true;
@@ -47,7 +47,7 @@ public final class PlayerManager implements Listener, IReloadable {
     @EventHandler
     public void onOptionChange(PlayerClientOptionsChangeEvent event) {
         var player = event.getPlayer();
-        var profile = StackPun.api().profileManager().getProfile(player);
+        var profile = StackPun.api().profileManager().get(player);
 
         profile.chatVisibility = event.getChatVisibility();
     }
@@ -63,8 +63,8 @@ public final class PlayerManager implements Listener, IReloadable {
     public void sendChatMessage(Player source, Player target, Component message) {
         if (source == target) return; // See STAP-17
 
-        var profile = StackPun.api().profileManager().getProfile(source);
-        var selfProfile = StackPun.api().profileManager().getProfile(target);
+        var profile = StackPun.api().profileManager().get(source);
+        var selfProfile = StackPun.api().profileManager().get(target);
 
         // 是否没有被拉黑，接收者也没有deafened
         if (selfProfile.chatVisibility == ClientOption.ChatVisibility.FULL && !selfProfile.deafened && !profile.blockedPlayers.contains(target.getUniqueId())
@@ -76,8 +76,8 @@ public final class PlayerManager implements Listener, IReloadable {
     public void sendIdentifiedMessage(Player source, Player target, Component message, Identity identity) {
         if (source == target) return; // See STAP-17
 
-        var profile = StackPun.api().profileManager().getProfile(source);
-        var selfProfile = StackPun.api().profileManager().getProfile(target);
+        var profile = StackPun.api().profileManager().get(source);
+        var selfProfile = StackPun.api().profileManager().get(target);
 
         // 是否没有被拉黑，接收者也没有deafened
         if (selfProfile.chatVisibility == ClientOption.ChatVisibility.FULL && !selfProfile.deafened && !profile.blockedPlayers.contains(target.getUniqueId())

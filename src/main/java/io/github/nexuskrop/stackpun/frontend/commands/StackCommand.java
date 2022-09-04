@@ -115,7 +115,7 @@ public interface StackCommand {
     }
 
     static Component getMuted(Player player) {
-        var profile = StackPun.api().profileManager().getProfile(player);
+        var profile = StackPun.api().profileManager().get(player);
 
         if (profile.muted) {
             return MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(MESSAGE_MUTED_YES));

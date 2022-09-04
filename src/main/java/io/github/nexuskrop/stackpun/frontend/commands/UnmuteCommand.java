@@ -33,7 +33,7 @@ public class UnmuteCommand implements StackCommand {
 
     public void execute(CommandSender sender, Object[] args) throws WrapperCommandSyntaxException {
         var player = (Player) args[0];
-        var profile = StackPun.api().profileManager().getProfile(player);
+        var profile = StackPun.api().profileManager().get(player);
 
         if (!profile.muted) {
             StackCommand.failLoc(NOT_MUTED);

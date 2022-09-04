@@ -33,7 +33,7 @@ public class MuteCommand implements StackCommand {
     public void execute(CommandSender sender, Object[] args) throws WrapperCommandSyntaxException {
         // 获取玩家和资料文件
         var player = (Player) args[0];
-        var profile = StackPun.api().profileManager().getProfile(player);
+        var profile = StackPun.api().profileManager().get(player);
 
         // 检查是否已禁言
         if (profile.muted) {

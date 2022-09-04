@@ -6,15 +6,14 @@
 
 package io.github.nexuskrop.stackpun.data;
 
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import io.github.nexuskrop.stackpun.StackPun;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 import java.util.HashMap;
@@ -31,7 +30,8 @@ public final class ProfileManager {
     private final StackPun plugin;
     private static final String PROFILES_JSON = "profiles.json";
     private Map<UUID, PlayerProfile> profiles;
-    private File profileFile;
+    private final Map<UUID, PlayerProfile> newProfiles = new HashMap<>();
+    private File profileFolder;
 
     /**
      * Indicates whether it is prohibited to write profiles to disk. Usually a {@code true} value
@@ -40,50 +40,25 @@ public final class ProfileManager {
      */
     private boolean prohibitWrite;
 
-    private final Gson serializer = new GsonBuilder().enableComplexMapKeySerialization().create();
+    private final Gson serializer = new Gson();
 
     public ProfileManager(StackPun self) {
         plugin = self;
     }
 
-    /**
-     * Initialises this instance. If existing profiles file is on disk, attempt to read it.
-     */
     public void init() {
         if (!plugin.getDataFolder().exists() && !plugin.getDataFolder().mkdir()) {
-            plugin.getSLF4JLogger().error("Failed to create data folder.");
+            plugin.getSLF4JLogger().error("No data folder available. Profiles will not be saved!");
             prohibitWrite = true;
         }
 
-        profileFile = new File(plugin.getDataFolder(), PROFILES_JSON);
-
-        if (profileFile.exists()) {
-            try (var input = new FileReader(profileFile)) {
-                var type = new TypeToken<Map<UUID, PlayerProfile>>() {
-                }.getType();
-                profiles = serializer.fromJson(input, type);
-            } catch (FileNotFoundException fnex) {
-                // 标志错误，禁止后续写入操作
-                plugin.getSLF4JLogger().error("Path exists but read failed - check permissions and if it is a directory?");
-                profiles = new HashMap<>();
-                prohibitWrite = true;
-            } catch (IOException ioex) {
-                // 标志错误，禁止后续写入操作
-                plugin.getSLF4JLogger().error("Failed to read", ioex);
-                profiles = new HashMap<>();
-                prohibitWrite = true;
-            } catch (JsonSyntaxException jse) {
-                plugin.getSLF4JLogger().warn("Invalid file syntax. Will override it.", jse);
-                profiles = new HashMap<>();
-            } catch (JsonIOException jioe) {
-                plugin.getSLF4JLogger().error("Failed to parse", jioe);
-                profiles = new HashMap<>();
-                prohibitWrite = true;
-            }
-        } else {
-            profiles = new HashMap<>();
+        profileFolder = new File(plugin.getDataFolder(), "profiles");
+        if (!profileFolder.exists() && !profileFolder.mkdir()) {
+            plugin.getSLF4JLogger().error("Failed to create profiles folder!");
+            prohibitWrite = true;
         }
     }
+
 
     /**
      * Sets a value indicating whether this instance can write profiles to disk.
@@ -104,6 +79,76 @@ public final class ProfileManager {
         return prohibitWrite;
     }
 
+    public @NotNull PlayerProfile get(@NotNull Player player) {
+        var uuid = Objects.requireNonNull(player).getUniqueId();
+
+        if (newProfiles.containsKey(uuid)) {
+            return newProfiles.get(uuid);
+        }
+
+        var file = new File(profileFolder, String.format("pf_%s.json", uuid));
+
+        if (!file.exists()) {
+            var result = new PlayerProfile(player.getName());
+            saveProfile(file, result);
+            newProfiles.put(uuid, result);
+            return result;
+        } else {
+            var result = loadProfile(file);
+            if (result == null) {
+                result = new PlayerProfile(player.getName());
+                saveProfile(file, result);
+                return result;
+            }
+            return result;
+        }
+    }
+
+    public @Nullable PlayerProfile loadProfile(@NotNull File file) {
+        if (file.exists()) {
+            try (var input = new FileReader(file)) {
+                var type = PlayerProfile.class;
+                return serializer.fromJson(input, type);
+            } catch (FileNotFoundException fnex) {
+                // 标志错误，禁止后续写入操作
+                plugin.getSLF4JLogger().error("Path exists but read failed - check permissions and if it is a directory?");
+                return null;
+            } catch (IOException ioex) {
+                // 标志错误，禁止后续写入操作
+                plugin.getSLF4JLogger().error("Failed to read", ioex);
+                return null;
+            } catch (JsonSyntaxException jse) {
+                plugin.getSLF4JLogger().warn("Invalid file syntax. Will override it.", jse);
+                return null;
+            } catch (JsonIOException jioe) {
+                plugin.getSLF4JLogger().error("Failed to parse", jioe);
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public void saveProfile(@NotNull File file, @NotNull PlayerProfile profile) {
+        try (var output = new FileWriter(Objects.requireNonNull(file))) {
+            var type = profile.getClass();
+            serializer.toJson(profile, type, output);
+        } catch (IOException ioex) {
+            // 标志错误，禁止后续写入操作
+            plugin.getSLF4JLogger().error("Failed to write to", ioex);
+        } catch (JsonIOException jioe) {
+            plugin.getSLF4JLogger().error("Failed to write profile", jioe);
+        }
+    }
+
+    /**
+     * Gets an old profile.
+     *
+     * @param player The player to get the profile.
+     * @return The old profile.
+     * @deprecated In favour of {@link ProfileManager#get(Player)}
+     */
+    @Deprecated(forRemoval = true)
     public PlayerProfile getProfile(@NotNull Player player) {
         // 提前获取UUID
         var uuid = Objects.requireNonNull(player).getUniqueId();
@@ -129,18 +174,9 @@ public final class ProfileManager {
             return;
         }
 
-        try (var output = new FileWriter(profileFile)) {
-            var type = new TypeToken<Map<UUID, PlayerProfile>>() {
-            }.getType();
-            serializer.toJson(profiles, type, output);
-        } catch (IOException ioex) {
-            // 标志错误，禁止后续写入操作
-            plugin.getSLF4JLogger().error("Failed to write to", ioex);
-            prohibitWrite = true;
-        } catch (JsonIOException jioe) {
-            plugin.getSLF4JLogger().error("Failed to export profiles", jioe);
-            profiles = new HashMap<>();
-            prohibitWrite = true;
+        for (var entry : newProfiles.entrySet()) {
+            var file = new File(profileFolder, String.format("pf_%s.json", entry.getKey()));
+            saveProfile(file, entry.getValue());
         }
     }
 }

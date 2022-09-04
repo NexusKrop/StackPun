@@ -62,7 +62,7 @@ public final class ChatManager implements Listener {
     public void onChatMessage(AsyncChatEvent event) {
         // TODO 解除 chatFormat 硬编码
         var player = event.getPlayer();
-        var profile = plugin.profileManager().getProfile(player);
+        var profile = plugin.profileManager().get(player);
 
         if (profile.chatVisibility != ClientOption.ChatVisibility.FULL) {
             StackCommand.sendErrorLoc(player, VISIBILITY_OFF);

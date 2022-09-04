@@ -30,7 +30,7 @@ public class IgnoreCommand implements StackCommand {
 
     public void execute(Player sender, Object[] args) throws WrapperCommandSyntaxException {
         var player = (Player) args[0];
-        var profile = StackPun.api().profileManager().getProfile(sender);
+        var profile = StackPun.api().profileManager().get(sender);
 
         // 禁止执行者自我拉黑
         if (player == sender) {

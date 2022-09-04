@@ -38,7 +38,7 @@ public class BlipCommand implements StackCommand {
     }
 
     public void executePlayer(Player player, Object[] args) throws WrapperCommandSyntaxException {
-        var profile = StackPun.api().profileManager().getProfile(player);
+        var profile = StackPun.api().profileManager().get(player);
         var pl = (Player) args[0];
 
         // 检查玩家是否被禁言
@@ -55,7 +55,7 @@ public class BlipCommand implements StackCommand {
             StackCommand.failLoc(SILENCED);
         }
 
-        var pf = StackPun.api().profileManager().getProfile(pl);
+        var pf = StackPun.api().profileManager().get(pl);
         if (pf.blockedPlayers.contains(player.getUniqueId())) {
             StackCommand.failLoc(BLOCKED_SELF);
         }
@@ -66,7 +66,7 @@ public class BlipCommand implements StackCommand {
     public void execute(CommandSender sender, Object[] args) throws WrapperCommandSyntaxException {
         var player = (Player) args[0];
 
-        var profile = StackPun.api().profileManager().getProfile(player);
+        var profile = StackPun.api().profileManager().get(player);
 
         if (profile.deafened) {
             StackCommand.failLoc(DEAF);

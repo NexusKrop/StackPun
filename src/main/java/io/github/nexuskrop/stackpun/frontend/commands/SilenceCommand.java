@@ -19,7 +19,7 @@ public class SilenceCommand implements StackCommand {
                 .withPermission("stackpun.commands.silence")
                 .withHelp("Silences yourself", "Silences yourself.")
                 .executesPlayer((sender, args) -> {
-                    var profile = StackPun.api().profileManager().getProfile(sender);
+                    var profile = StackPun.api().profileManager().get(sender);
 
                     if (profile.silenced) {
                         profile.silenced = false;
