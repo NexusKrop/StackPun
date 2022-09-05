@@ -14,6 +14,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 public class MuteCommand implements StackCommand {
 
@@ -43,7 +44,7 @@ public class MuteCommand implements StackCommand {
             // 设置资料内禁言为 true
             profile.muted = true;
             StackPun.api().profileManager().putProfile(player, profile);
-            StackCommand.sendSuccess(sender, MiniMessage.miniMessage().deserialize(
+            CommandSenders.sendSuccess(sender, MiniMessage.miniMessage().deserialize(
                     StackPun.api().messageManager().get(SUCCESS),
                     Placeholder.component("victim", player.displayName())));
         }

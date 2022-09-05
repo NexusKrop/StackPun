@@ -11,6 +11,7 @@ import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import io.github.nexuskrop.stackpun.StackPun;
 import io.github.nexuskrop.stackpun.util.Common;
 import org.bukkit.command.CommandSender;
+import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 public class StackPunCommand implements StackCommand {
     private static final String RELOAD_BEGIN = "commands.stackpun.reload_begin";
@@ -50,6 +51,6 @@ public class StackPunCommand implements StackCommand {
         StackCommand.sendMessageLoc(sender, RELOAD_BEGIN);
         StackPun.api().configManager().reload();
         StackPun.api().messageManager().reload();
-        StackCommand.sendSuccessLoc(sender, RELOAD_SUCCESS);
+        CommandSenders.sendSuccess(sender, RELOAD_SUCCESS);
     }
 }

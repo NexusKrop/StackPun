@@ -9,6 +9,7 @@ package io.github.nexuskrop.stackpun.frontend.commands;
 import com.destroystokyo.paper.ClientOption;
 import dev.jorel.commandapi.CommandAPICommand;
 import io.github.nexuskrop.stackpun.StackPun;
+import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 public class DeafenCommand implements StackCommand {
     private static final String SUCCESS_ON = "commands.deafen.success_on";
@@ -30,10 +31,10 @@ public class DeafenCommand implements StackCommand {
 
                     if (profile.deafened) {
                         profile.deafened = false;
-                        StackCommand.sendSuccessLoc(sender, SUCCESS_OFF);
+                        CommandSenders.sendSuccess(sender, SUCCESS_OFF);
                     } else {
                         profile.deafened = true;
-                        StackCommand.sendSuccessLoc(sender, SUCCESS_ON);
+                        CommandSenders.sendSuccess(sender, SUCCESS_ON);
                     }
 
                     StackPun.api().profileManager().putProfile(sender, profile);

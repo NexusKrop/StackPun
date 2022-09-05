@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun.frontend.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 public class SpawnCommand implements StackCommand {
 
@@ -20,7 +21,7 @@ public class SpawnCommand implements StackCommand {
                 .withPermission("stackpun.commands.spawn")
                 .executesPlayer((sender, args) -> {
                     sender.teleport(sender.getWorld().getSpawnLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
-                    StackCommand.sendSuccessLoc(sender, SUCCESS);
+                    CommandSenders.sendSuccess(sender, SUCCESS);
                 })
                 .register();
     }

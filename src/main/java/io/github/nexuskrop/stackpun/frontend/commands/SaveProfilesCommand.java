@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun.frontend.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import io.github.nexuskrop.stackpun.StackPun;
+import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 public class SaveProfilesCommand implements StackCommand {
     private static final String BEGIN = "commands.save-profiles.begin";
@@ -20,7 +21,7 @@ public class SaveProfilesCommand implements StackCommand {
                 .executes((sender, args) -> {
                     StackCommand.sendMessageLoc(sender, BEGIN);
                     StackPun.api().profileManager().save();
-                    StackCommand.sendSuccessLoc(sender, SUCCESS);
+                    CommandSenders.sendSuccess(sender, SUCCESS);
                 })
                 .register();
     }

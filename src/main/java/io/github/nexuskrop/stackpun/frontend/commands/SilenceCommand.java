@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun.frontend.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import io.github.nexuskrop.stackpun.StackPun;
+import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 public class SilenceCommand implements StackCommand {
     private static final String SUCCESS_ON = "commands.silence.success_on";
@@ -23,10 +24,10 @@ public class SilenceCommand implements StackCommand {
 
                     if (profile.silenced) {
                         profile.silenced = false;
-                        StackCommand.sendSuccessLoc(sender, SUCCESS_OFF);
+                        CommandSenders.sendSuccess(sender, SUCCESS_OFF);
                     } else {
                         profile.silenced = true;
-                        StackCommand.sendSuccessLoc(sender, SUCCESS_ON);
+                        CommandSenders.sendSuccess(sender, SUCCESS_ON);
                     }
 
                     StackPun.api().profileManager().putProfile(sender, profile);

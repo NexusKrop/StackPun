@@ -12,6 +12,7 @@ import dev.jorel.commandapi.arguments.PlayerArgument;
 import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import io.github.nexuskrop.stackpun.StackPun;
 import org.bukkit.entity.Player;
+import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 public class IgnoreCommand implements StackCommand {
     private static final String OP_DENIED = "commands.ignore.op_denied";
@@ -50,11 +51,11 @@ public class IgnoreCommand implements StackCommand {
         if (profile.blockedPlayers.contains(uuid)) {
             // 如果已经拉黑，移出黑名单
             profile.blockedPlayers.remove(uuid);
-            StackCommand.sendSuccessVal(sender, SUCCESS_REMOVE, player.displayName());
+            CommandSenders.sendSuccess(sender, SUCCESS_REMOVE, player.displayName());
         } else {
             // 否则便加入黑名单
             profile.blockedPlayers.add(uuid);
-            StackCommand.sendSuccessVal(sender, SUCCESS_ADD, player.displayName());
+            CommandSenders.sendSuccess(sender, SUCCESS_ADD, player.displayName());
         }
     }
 }

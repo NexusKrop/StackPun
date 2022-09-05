@@ -29,6 +29,14 @@ public interface StackCommand {
     String MESSAGE_MUTED_NO = "commands.generic.muted.no";
     String MESSAGE_SPECIFY_SELF_FAILURE = "commands.generic.self_specify_failure";
 
+    /**
+     * This sender may have unexpected behaviour.
+     *
+     * @param target    The target of the message.
+     * @param component The component to send.
+     * @deprecated In favour of {@link x.nexuskrop.stackpun.commands.intf.CommandSenders#sendSuccess(CommandSender, String)}
+     */
+    @Deprecated(since = "0.1.1-alpha", forRemoval = true)
     static void sendSuccess(CommandSender target, Component component) {
         if (isFeedbackEnabled()) {
             target.sendMessage(component);
@@ -36,6 +44,7 @@ public interface StackCommand {
         }
     }
 
+    @Deprecated(since = "0.1.1-alpha", forRemoval = true)
     static void sendSuccessVal(CommandSender target, String id, Component val) {
         if (isFeedbackEnabled()) {
             var msg = MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(id),
@@ -46,6 +55,12 @@ public interface StackCommand {
         }
     }
 
+    /**
+     * @param target The target of the message.
+     * @param id     The ID of the localised message to send.
+     * @deprecated In favour of {@link x.nexuskrop.stackpun.commands.intf.CommandSenders#sendSuccess(CommandSender, String)}
+     */
+    @Deprecated(since = "0.1.1-alpha", forRemoval = true)
     static void sendSuccessLoc(CommandSender target, String id) {
         sendSuccess(target, StackPun.api().messageManager().getMini(id));
     }

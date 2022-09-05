@@ -14,6 +14,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 public class UnmuteCommand implements StackCommand {
     private static final String UNMUTE_SELF_PERM = StackPun.cmdPerm("unmute.self");
@@ -52,6 +53,6 @@ public class UnmuteCommand implements StackCommand {
 
         var feedback = MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(SUCCESS),
                 Placeholder.component("victim", player.displayName()));
-        StackCommand.sendSuccess(sender, feedback);
+        CommandSenders.sendSuccess(sender, feedback);
     }
 }

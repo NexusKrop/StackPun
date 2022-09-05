@@ -7,6 +7,7 @@
 package io.github.nexuskrop.stackpun.frontend.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
+import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 public class SetSpawnCommand implements StackCommand {
     private static final String SUCCESS = "commands.setspawn.success";
@@ -18,7 +19,7 @@ public class SetSpawnCommand implements StackCommand {
                 .withPermission("stackpun.commands.setspawn")
                 .executesPlayer((sender, args) -> {
                     sender.getWorld().setSpawnLocation(sender.getLocation());
-                    StackCommand.sendSuccessLoc(sender, SUCCESS);
+                    CommandSenders.sendSuccess(sender, SUCCESS);
                 }).register();
     }
 }
