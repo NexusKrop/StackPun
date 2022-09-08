@@ -8,7 +8,8 @@ package io.github.nexuskrop.stackpun.frontend.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import io.github.nexuskrop.stackpun.StackPun;
-import x.nexuskrop.stackpun.commands.intf.CommandSenders;
+
+import java.util.concurrent.CompletableFuture;
 
 public class SaveProfilesCommand implements StackCommand {
     private static final String BEGIN = "commands.save-profiles.begin";
@@ -20,8 +21,7 @@ public class SaveProfilesCommand implements StackCommand {
                 .withPermission(StackPun.cmdPerm("save-profiles"))
                 .executes((sender, args) -> {
                     StackCommand.sendMessageLoc(sender, BEGIN);
-                    StackPun.api().profileManager().save();
-                    CommandSenders.sendSuccess(sender, SUCCESS);
+                    var cf = CompletableFuture.runAsync(() -> StackPun.api().profileManager().save());
                 })
                 .register();
     }
