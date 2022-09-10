@@ -9,9 +9,7 @@ package io.github.nexuskrop.stackpun.data;
 import com.destroystokyo.paper.ClientOption;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Represents a player profile.
@@ -44,6 +42,8 @@ public class PlayerProfile implements Serializable {
 
     private boolean silenced;
 
+    private final Map<String, Boolean> preferences = new HashMap<>();
+
     private boolean hadWelcomed;
 
     private final List<UUID> blockedPlayers = new ArrayList<>();
@@ -64,6 +64,18 @@ public class PlayerProfile implements Serializable {
      */
     public boolean isMuted() {
         return muted;
+    }
+
+    public boolean getPreference(String id) {
+        if (!preferences.containsKey(id)) {
+            return false;
+        }
+
+        return preferences.get(id);
+    }
+
+    public void setPreferences(String id, boolean value) {
+        preferences.put(id, value);
     }
 
     public void setMuted(boolean muted) {
