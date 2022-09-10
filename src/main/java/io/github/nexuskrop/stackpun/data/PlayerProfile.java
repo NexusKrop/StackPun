@@ -69,7 +69,7 @@ public class PlayerProfile {
     /**
      * A list of all blocked players.
      */
-    public List<UUID> blockedPlayers = new ArrayList<>();
+    public final List<UUID> blockedPlayers = new ArrayList<>();
 
     /**
      * The chat visibility of this instance.

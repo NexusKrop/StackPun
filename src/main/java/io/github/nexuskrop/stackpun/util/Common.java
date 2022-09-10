@@ -41,6 +41,7 @@ public final class Common {
         var gson = new Gson();
 
         try (var stream = Common.class.getResourceAsStream("/product.json")) {
+            assert stream != null;
             var result = gson.fromJson(new InputStreamReader(stream), ProductData.class);
             productData = result;
             return result;

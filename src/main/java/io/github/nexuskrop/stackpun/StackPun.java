@@ -16,7 +16,6 @@ import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
-
 import x.nexuskrop.stackpun.event.InventoryListener;
 import x.nexuskrop.stackpun.net.NetworkManager;
 import x.nexuskrop.stackpun.net.StatusListener;
@@ -38,7 +37,6 @@ public class StackPun extends JavaPlugin implements IStackPun {
     private ChatManager chatManager;
     private ProfileManager profileManager;
     private PlayerManager playerManager;
-    private World overWorld;
     private ConfigManager configManager;
     private NetworkManager networkManager;
 
@@ -117,7 +115,7 @@ public class StackPun extends JavaPlugin implements IStackPun {
         this.saveDefaultConfig();
 
         configManager = new ConfigManager(this);
-        overWorld = this.getServer().getWorld("overworld");
+        World overWorld = this.getServer().getWorld("overworld");
 
         getSLF4JLogger().info("StackPun Service instantiated");
 
