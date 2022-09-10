@@ -28,7 +28,6 @@ import java.util.UUID;
  */
 public final class ProfileManager {
     private final StackPun plugin;
-    private static final String PROFILES_JSON = "profiles.json";
     private Map<UUID, PlayerProfile> profiles;
     private final Map<UUID, PlayerProfile> newProfiles = new HashMap<>();
     private File profileFolder;
