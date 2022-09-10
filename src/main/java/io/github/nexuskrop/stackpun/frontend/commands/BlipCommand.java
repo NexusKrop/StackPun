@@ -17,6 +17,11 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/**
+ * A legacy command to allow a player to blip (ping) another player.
+ *
+ * @author WithLithum
+ */
 public class BlipCommand implements StackCommand {
     private static final String BLIPPED = "commands.blip.blipped";
     private static final Sound BLIPPED_SOUND = Sound.sound(Key.key("minecraft",

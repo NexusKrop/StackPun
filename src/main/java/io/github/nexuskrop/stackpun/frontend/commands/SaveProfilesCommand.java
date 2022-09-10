@@ -11,6 +11,9 @@ import io.github.nexuskrop.stackpun.StackPun;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * A legacy command allowing operators to save all profiles.
+ */
 public class SaveProfilesCommand implements StackCommand {
     private static final String BEGIN = "commands.save-profiles.begin";
     private static final String SUCCESS = "commands.save-profiles.success";

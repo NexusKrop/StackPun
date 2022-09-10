@@ -11,6 +11,9 @@ import dev.jorel.commandapi.CommandAPICommand;
 import io.github.nexuskrop.stackpun.StackPun;
 import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
+/**
+ * A legacy command to allow a user to deafen themselves.
+ */
 public class DeafenCommand implements StackCommand {
     private static final String SUCCESS_ON = "commands.deafen.success_on";
     private static final String SUCCESS_OFF = "commands.deafen.success_off";

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Deprecated(forRemoval = true, since = "0.1.2")
 public class CommandManager {
     private final List<StackCommand> commands = new ArrayList<>();
 

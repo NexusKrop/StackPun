@@ -5,7 +5,7 @@
  */
 
 /**
- * This package is where all commands reside.
+ * Includes all legacy commands.
  *
  * @author WithLithum
  */

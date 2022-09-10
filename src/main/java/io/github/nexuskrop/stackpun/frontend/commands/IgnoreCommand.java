@@ -14,6 +14,9 @@ import io.github.nexuskrop.stackpun.StackPun;
 import org.bukkit.entity.Player;
 import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
+/**
+ * A legacy command to allow users to ignore another player.
+ */
 public class IgnoreCommand implements StackCommand {
     private static final String OP_DENIED = "commands.ignore.op_denied";
     private static final String SUCCESS_REMOVE = "commands.ignore.success.remove";

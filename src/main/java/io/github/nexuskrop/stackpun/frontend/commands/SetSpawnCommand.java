@@ -9,6 +9,9 @@ package io.github.nexuskrop.stackpun.frontend.commands;
 import dev.jorel.commandapi.CommandAPICommand;
 import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
+/**
+ * A legacy command to allow a user to set the world spawn point to the current location of the user.
+ */
 public class SetSpawnCommand implements StackCommand {
     private static final String SUCCESS = "commands.setspawn.success";
 

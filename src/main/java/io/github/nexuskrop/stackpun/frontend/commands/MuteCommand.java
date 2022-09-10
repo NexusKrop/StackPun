@@ -16,6 +16,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
+/**
+ * A legacy command allowing an operator to mute a player.
+ */
 public class MuteCommand implements StackCommand {
 
     private static final String ALREADY_MUTED = "commands.mute.already_muted";

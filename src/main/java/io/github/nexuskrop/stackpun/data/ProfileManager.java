@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * A manager to manage player profile information.
+ * Manages the player profiles.
  *
  * @author WithLithum
  */
@@ -41,10 +41,18 @@ public final class ProfileManager {
 
     private final Gson serializer = new Gson();
 
+    /**
+     * Initialises a new instance of the {@link ProfileManager} class.
+     *
+     * @param self The plugin.
+     */
     public ProfileManager(StackPun self) {
         plugin = self;
     }
 
+    /**
+     * Initialises this instance.
+     */
     public void init() {
         if (!plugin.getDataFolder().exists() && !plugin.getDataFolder().mkdir()) {
             plugin.getSLF4JLogger().error("No data folder available. Profiles will not be saved!");
@@ -78,6 +86,12 @@ public final class ProfileManager {
         return prohibitWrite;
     }
 
+    /**
+     * Gets a player profile.
+     *
+     * @param player The player.
+     * @return An instance of {@link PlayerProfile} representing the user profile of the {@code player}.
+     */
     public @NotNull PlayerProfile get(@NotNull Player player) {
         var uuid = Objects.requireNonNull(player).getUniqueId();
 
@@ -103,6 +117,12 @@ public final class ProfileManager {
         }
     }
 
+    /**
+     * Loads a profile from disk.
+     *
+     * @param file The file to read.
+     * @return An instance of {@link PlayerProfile} loaded from the file specified.
+     */
     public @Nullable PlayerProfile loadProfile(@NotNull File file) {
         if (file.exists()) {
             try (var input = new FileReader(file)) {
@@ -128,6 +148,12 @@ public final class ProfileManager {
         }
     }
 
+    /**
+     * Saves the specified profile to the specified file.
+     *
+     * @param file    The file to save to.
+     * @param profile The profile to save.
+     */
     public void saveProfile(@NotNull File file, @NotNull PlayerProfile profile) {
         try (var output = new FileWriter(Objects.requireNonNull(file))) {
             var type = profile.getClass();
@@ -162,10 +188,19 @@ public final class ProfileManager {
         return profiles.get(uuid);
     }
 
+    /**
+     * Sets the profile of the specified player.
+     *
+     * @param player  The player to set profile.
+     * @param profile The profile to set.
+     */
     public void putProfile(@NotNull Player player, @NotNull PlayerProfile profile) {
         profiles.put(Objects.requireNonNull(player).getUniqueId(), Objects.requireNonNull(profile));
     }
 
+    /**
+     * Saves all profiles.
+     */
     public void save() {
         if (prohibitWrite) {
             // 如果禁止，直接返回
