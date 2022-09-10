@@ -16,6 +16,8 @@ import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
+
+import x.nexuskrop.stackpun.event.InventoryListener;
 import x.nexuskrop.stackpun.net.NetworkManager;
 import x.nexuskrop.stackpun.net.StatusListener;
 
@@ -139,6 +141,7 @@ public class StackPun extends JavaPlugin implements IStackPun {
         var listener = new StatusListener(this.getSLF4JLogger());
         getServer().getPluginManager().registerEvents(listener, this);
         configManager.addMonitored(listener);
+        getServer().getPluginManager().registerEvents(new InventoryListener(), this);
     }
 
     /**
