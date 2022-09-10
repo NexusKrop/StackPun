@@ -47,21 +47,21 @@ public class BlipCommand implements StackCommand {
         var pl = (Player) args[0];
 
         // 检查玩家是否被禁言
-        if (profile.muted) {
+        if (profile.isMuted()) {
             // 如果被禁言，拦截操作并提示
             StackCommand.failLoc(StackCommand.MESSAGE_MUTED);
         }
 
-        if (profile.blockedPlayers.contains(pl.getUniqueId())) {
+        if (profile.getBlockedPlayers().contains(pl.getUniqueId())) {
             StackCommand.failLoc(BLOCKED_OTHER);
         }
 
-        if (profile.silenced) {
+        if (profile.isSilenced()) {
             StackCommand.failLoc(SILENCED);
         }
 
         var pf = StackPun.api().profileManager().get(pl);
-        if (pf.blockedPlayers.contains(player.getUniqueId())) {
+        if (pf.getBlockedPlayers().contains(player.getUniqueId())) {
             StackCommand.failLoc(BLOCKED_SELF);
         }
 
@@ -73,7 +73,7 @@ public class BlipCommand implements StackCommand {
 
         var profile = StackPun.api().profileManager().get(player);
 
-        if (profile.deafened) {
+        if (profile.isDeafened()) {
             StackCommand.failLoc(DEAF);
         }
 

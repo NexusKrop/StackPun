@@ -16,7 +16,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public class SaveProfilesCommand implements StackCommand {
     private static final String BEGIN = "commands.save-profiles.begin";
-    private static final String SUCCESS = "commands.save-profiles.success";
 
     @Override
     public void register() {
@@ -24,7 +23,7 @@ public class SaveProfilesCommand implements StackCommand {
                 .withPermission(StackPun.cmdPerm("save-profiles"))
                 .executes((sender, args) -> {
                     StackCommand.sendMessageLoc(sender, BEGIN);
-                    var cf = CompletableFuture.runAsync(() -> StackPun.api().profileManager().save());
+                    CompletableFuture.runAsync(() -> StackPun.api().profileManager().save());
                 })
                 .register();
     }

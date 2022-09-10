@@ -178,14 +178,11 @@ public final class ProfileManager {
         // 提前获取UUID
         var uuid = Objects.requireNonNull(player).getUniqueId();
 
-        if (!profiles.containsKey(uuid)) {
-            // 如果没有现存实例，创建新的实例
+        return profiles.computeIfAbsent(uuid, (key -> {
             var result = new PlayerProfile(player.getName());
             profiles.put(uuid, result);
             return result;
-        }
-
-        return profiles.get(uuid);
+        }));
     }
 
     /**

@@ -36,19 +36,17 @@ public class UnmuteCommand implements StackCommand {
         var player = (Player) args[0];
         var profile = StackPun.api().profileManager().get(player);
 
-        if (!profile.muted) {
+        if (!profile.isMuted()) {
             StackCommand.failLoc(NOT_MUTED);
             return;
         }
 
-        if (player == sender) {
-            if (!player.hasPermission(UNMUTE_SELF_PERM)) {
-                StackCommand.failLoc(UNMUTE_SELF_DENIED);
-                return;
-            }
+        if (player == sender || !player.hasPermission(UNMUTE_SELF_PERM)) {
+            StackCommand.failLoc(UNMUTE_SELF_DENIED);
+            return;
         }
 
-        profile.muted = false;
+        profile.setMuted(false);
         StackPun.api().profileManager().putProfile(player, profile);
 
         var feedback = MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(SUCCESS),

@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The legacy command manager.
+ *
+ * @deprecated In favour of {@link x.nexuskrop.stackpun.commands.CommandManager}
+ */
 @Deprecated(forRemoval = true, since = "0.1.2")
 public class CommandManager {
     private final List<StackCommand> commands = new ArrayList<>();

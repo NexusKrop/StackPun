@@ -14,7 +14,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.command.CommandSender;
@@ -44,11 +43,14 @@ public interface StackCommand {
         }
     }
 
+    /**
+     * @deprecated In favour of {@link x.nexuskrop.stackpun.commands.intf.CommandSenders#sendSuccess(CommandSender, Component)}
+     */
     @Deprecated(since = "0.1.1-alpha", forRemoval = true)
     static void sendSuccessVal(CommandSender target, String id, Component val) {
         if (isFeedbackEnabled()) {
             var msg = MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(id),
-                    Placeholder.component("value", val));
+                    Common.valueComponent(val));
 
             target.sendMessage(msg);
             broadcastSuccess(target, msg);
@@ -116,23 +118,23 @@ public interface StackCommand {
 
     static void sendMessageVal(CommandSender target, String id, String val) {
         target.sendMessage(MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(id),
-                Placeholder.unparsed("value", val)));
+                Common.valueLiteral(val)));
     }
 
     static void sendMessageVal(CommandSender target, String id, Component val) {
         target.sendMessage(MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(id),
-                Placeholder.component("value", val)));
+                Common.valueComponent(val)));
     }
 
     static void sendMessageVal(CommandSender target, String id, Entity val) {
         target.sendMessage(MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(id),
-                Placeholder.component("value", Common.getEntityRepresent(val))));
+                Common.valueComponent(Common.getEntityRepresent(val))));
     }
 
     static Component getMuted(Player player) {
         var profile = StackPun.api().profileManager().get(player);
 
-        if (profile.muted) {
+        if (profile.isMuted()) {
             return MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(MESSAGE_MUTED_YES));
         } else {
             return MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(MESSAGE_MUTED_NO));

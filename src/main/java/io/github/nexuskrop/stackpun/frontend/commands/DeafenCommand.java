@@ -27,16 +27,16 @@ public class DeafenCommand implements StackCommand {
                 .executesPlayer((sender, args) -> {
                     var profile = StackPun.api().profileManager().get(sender);
 
-                    if (profile.chatVisibility != ClientOption.ChatVisibility.FULL) {
+                    if (profile.getChatVisibility() != ClientOption.ChatVisibility.FULL) {
                         StackCommand.failLoc(CHAT_OFF);
                         return;
                     }
 
-                    if (profile.deafened) {
-                        profile.deafened = false;
+                    if (profile.isDeafened()) {
+                        profile.setDeafened(false);
                         CommandSenders.sendSuccess(sender, SUCCESS_OFF);
                     } else {
-                        profile.deafened = true;
+                        profile.setDeafened(true);
                         CommandSenders.sendSuccess(sender, SUCCESS_ON);
                     }
 

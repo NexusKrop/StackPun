@@ -60,23 +60,22 @@ public final class ChatManager implements Listener {
 
     @EventHandler
     public void onChatMessage(AsyncChatEvent event) {
-        // TODO 解除 chatFormat 硬编码
         var player = event.getPlayer();
         var profile = plugin.profileManager().get(player);
 
-        if (profile.chatVisibility != ClientOption.ChatVisibility.FULL) {
+        if (profile.getChatVisibility() != ClientOption.ChatVisibility.FULL) {
             StackCommand.sendErrorLoc(player, VISIBILITY_OFF);
             event.setCancelled(true);
             return;
         }
 
-        if (profile.muted) {
+        if (profile.isMuted()) {
             StackCommand.sendErrorLoc(player, StackCommand.MESSAGE_MUTED);
             event.setCancelled(true);
             return;
         }
 
-        if (profile.silenced) {
+        if (profile.isSilenced()) {
             StackCommand.sendErrorLoc(player, SILENCED);
             event.setCancelled(true);
             return;

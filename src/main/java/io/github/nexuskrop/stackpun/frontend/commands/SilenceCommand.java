@@ -22,11 +22,11 @@ public class SilenceCommand implements StackCommand {
                 .executesPlayer((sender, args) -> {
                     var profile = StackPun.api().profileManager().get(sender);
 
-                    if (profile.silenced) {
-                        profile.silenced = false;
+                    if (profile.isSilenced()) {
+                        profile.setSilenced(false);
                         CommandSenders.sendSuccess(sender, SUCCESS_OFF);
                     } else {
-                        profile.silenced = true;
+                        profile.setSilenced(true);
                         CommandSenders.sendSuccess(sender, SUCCESS_ON);
                     }
 

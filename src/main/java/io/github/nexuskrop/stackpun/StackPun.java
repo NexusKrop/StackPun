@@ -31,7 +31,7 @@ import java.io.File;
  * @see org.bukkit.plugin.java.JavaPlugin
  */
 public class StackPun extends JavaPlugin implements IStackPun {
-    private static StackPun _instance;
+    private static StackPun instance;
 
     private x.nexuskrop.stackpun.commands.CommandManager commandManagerV2;
     private ChatManager chatManager;
@@ -42,8 +42,8 @@ public class StackPun extends JavaPlugin implements IStackPun {
 
     private MessageManager messageManager;
 
-    private void setInstance(StackPun instance) {
-        _instance = instance;
+    private static void setInstance(StackPun instance) {
+        StackPun.instance = instance;
     }
 
     /**
@@ -53,7 +53,7 @@ public class StackPun extends JavaPlugin implements IStackPun {
      * instance.
      */
     public static IStackPun api() {
-        return _instance;
+        return instance;
     }
 
     @Override
@@ -115,7 +115,6 @@ public class StackPun extends JavaPlugin implements IStackPun {
         this.saveDefaultConfig();
 
         configManager = new ConfigManager(this);
-        World overWorld = this.getServer().getWorld("overworld");
 
         getSLF4JLogger().info("StackPun Service instantiated");
 

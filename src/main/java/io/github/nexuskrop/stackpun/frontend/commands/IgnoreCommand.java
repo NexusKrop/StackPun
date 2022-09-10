@@ -51,13 +51,13 @@ public class IgnoreCommand implements StackCommand {
         var uuid = player.getUniqueId();
 
         // 检查是否目标已经拉黑
-        if (profile.blockedPlayers.contains(uuid)) {
+        if (profile.getBlockedPlayers().contains(uuid)) {
             // 如果已经拉黑，移出黑名单
-            profile.blockedPlayers.remove(uuid);
+            profile.getBlockedPlayers().remove(uuid);
             CommandSenders.sendSuccess(sender, SUCCESS_REMOVE, player.displayName());
         } else {
             // 否则便加入黑名单
-            profile.blockedPlayers.add(uuid);
+            profile.getBlockedPlayers().add(uuid);
             CommandSenders.sendSuccess(sender, SUCCESS_ADD, player.displayName());
         }
     }

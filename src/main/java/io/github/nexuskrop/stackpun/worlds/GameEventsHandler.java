@@ -11,6 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
 
+// TODO 注册
+
 public class GameEventsHandler implements Listener {
     @EventHandler
     public void onEntitySpawn(EntitySpawnEvent event) {

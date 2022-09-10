@@ -40,12 +40,12 @@ public class MuteCommand implements StackCommand {
         var profile = StackPun.api().profileManager().get(player);
 
         // 检查是否已禁言
-        if (profile.muted) {
+        if (profile.isMuted()) {
             // 如果已经禁言，提示并返回
             StackCommand.failLoc(ALREADY_MUTED);
         } else {
             // 设置资料内禁言为 true
-            profile.muted = true;
+            profile.setMuted(true);
             StackPun.api().profileManager().putProfile(player, profile);
             CommandSenders.sendSuccess(sender, MiniMessage.miniMessage().deserialize(
                     StackPun.api().messageManager().get(SUCCESS),

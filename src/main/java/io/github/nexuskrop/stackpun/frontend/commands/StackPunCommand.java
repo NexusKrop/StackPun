@@ -40,6 +40,7 @@ public class StackPunCommand implements StackCommand {
 
         if (product == null) {
             StackCommand.failLoc(VERSION_NO_PRODUCT);
+            return;
         }
 
         StackCommand.sendMessageVal(sender, VERSION_APP_NAME, Common.APP_NAME);
