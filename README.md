@@ -1,6 +1,10 @@
 # StackPun
 
-![CircleCI](https://img.shields.io/circleci/build/bitbucket/nexuskrop/stackpun?logo=circleci&style=flat-square)
+[![Java CI with Maven](https://img.shields.io/github/workflow/status/NexusKrop/StackPun/Java%20CI%20with%20Maven?logo=github&style=flat-square)](https://github.com/NexusKrop/StackPun/actions/workflows/maven.yml)
+[![GitHub](https://img.shields.io/github/license/NexusKrop/StackPun?style=flat-square)](LICENSE)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/NexusKrop/StackPun?style=flat-square)](https://github.com/NexusKrop/StackPun)
+[![GitHub issues](https://img.shields.io/github/issues/NexusKrop/StackPun?style=flat-square)](https://github.com/NexusKrop/StackPun/issues)
+
 
 新版 Stack 的支持插件，基于 PaperMC。
 
