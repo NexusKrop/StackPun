@@ -17,15 +17,14 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import x.nexuskrop.stackpun.util.IReloadable;
-import x.nexuskrop.stackpun.util.Worlds;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
+import x.nexuskrop.stackpun.util.IReloadable;
+import x.nexuskrop.stackpun.util.Worlds;
 
 import java.util.Objects;
 
@@ -37,7 +36,8 @@ public final class ChatManager implements Listener, IReloadable {
 
     private final IStackPun plugin = StackPun.api();
 
-    public ChatManager(@NotNull StackPun self) {
+    public void init(@NotNull StackPun self) {
+        self.getSLF4JLogger().info("Initialising chat manager");
         self.getServer().getPluginManager().registerEvents(this, self);
     }
 

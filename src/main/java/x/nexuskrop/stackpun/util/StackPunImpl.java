@@ -1,6 +1,10 @@
-package x.nexuskrop.stackpun.util;
+/*
+ * Copyright (c) 2022.
+ * This file is part of StackPun.
+ * Licensed under GNU AGPL version 3 or later.
+ */
 
-import java.io.File;
+package x.nexuskrop.stackpun.util;
 
 import io.github.nexuskrop.stackpun.ConfigManager;
 import io.github.nexuskrop.stackpun.StackPun;
@@ -11,6 +15,8 @@ import io.github.nexuskrop.stackpun.players.ChatManager;
 import io.github.nexuskrop.stackpun.players.PlayerManager;
 import x.nexuskrop.stackpun.commands.CommandManager;
 import x.nexuskrop.stackpun.net.NetworkManager;
+
+import java.io.File;
 
 /**
  * Implementation of the {@link IStackPun} interface.
@@ -28,29 +34,34 @@ public class StackPunImpl implements IStackPun {
 
     /**
      * Initialises an instance of the {@link StackPunImpl} class.
+     *
      * @param plugin The plugin.
      */
     public StackPunImpl(StackPun plugin) {
         commandManager = new CommandManager(plugin.getSLF4JLogger());
-        chatManager = new ChatManager(plugin);
-        profileManager = new ProfileManager(plugin);
+        chatManager = new ChatManager();
+        profileManager = new ProfileManager(plugin.getSLF4JLogger());
         messageManager = new MessageManager(new File(plugin.getDataFolder(), "msg.properties"), plugin.getSLF4JLogger());
-        playerManager = new PlayerManager(plugin);
-        networkManager = new NetworkManager(plugin);
+        playerManager = new PlayerManager(plugin.getSLF4JLogger());
+        networkManager = new NetworkManager(plugin.getSLF4JLogger());
         configManager = new ConfigManager(plugin);
     }
 
     /**
      * Initialises this instance.
      */
-    public void initialise() {
-        profileManager.init();
+    public void initialise(StackPun self) {
+        self.getSLF4JLogger().info("Initialising StackPun managers");
+        profileManager.init(self);
         messageManager.tryInit();
+        chatManager.init(self);
+        playerManager.init(self);
 
         commandManager.addFromProject();
 
         configManager.addMonitored(playerManager);
         configManager.addMonitored(chatManager);
+        self.getSLF4JLogger().info("Finished StackPun managers initialisation");
     }
 
     @Override

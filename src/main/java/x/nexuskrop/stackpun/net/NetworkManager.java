@@ -10,8 +10,8 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
-import io.github.nexuskrop.stackpun.StackPun;
 import org.bukkit.entity.Player;
+import org.slf4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -20,10 +20,10 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class NetworkManager {
     private final ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
-    private final StackPun plugin;
+    private final Logger logger;
 
-    public NetworkManager(StackPun self) {
-        plugin = self;
+    public NetworkManager(Logger self) {
+        logger = self;
     }
 
     public void sendDemoScreen(Player victim) {
@@ -33,7 +33,7 @@ public class NetworkManager {
         try {
             protocolManager.sendServerPacket(victim, packet);
         } catch (InvocationTargetException e) {
-            plugin.getSLF4JLogger().warn("Failed to process invocation target", e);
+            logger.warn("Failed to process invocation target", e);
         }
     }
 }

@@ -28,8 +28,6 @@ public final class MessageManager {
         logger.info("MessageManager instantiated");
 
         messagesFile = msgFile;
-
-        tryInit();
     }
 
     /**

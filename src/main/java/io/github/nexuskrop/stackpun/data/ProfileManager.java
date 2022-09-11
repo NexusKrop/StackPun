@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.io.*;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ import java.util.UUID;
  * @author WithLithum
  */
 public final class ProfileManager {
-    private final StackPun plugin;
+    private final Logger logger;
     private Map<UUID, PlayerProfile> profiles;
     private final Map<UUID, PlayerProfile> newProfiles = new HashMap<>();
     private File profileFolder;
@@ -44,24 +45,26 @@ public final class ProfileManager {
     /**
      * Initialises a new instance of the {@link ProfileManager} class.
      *
-     * @param self The plugin.
+     * @param logger The logger.
      */
-    public ProfileManager(StackPun self) {
-        plugin = self;
+    public ProfileManager(Logger logger) {
+        this.logger = logger;
     }
 
     /**
      * Initialises this instance.
      */
-    public void init() {
+    public void init(StackPun plugin) {
+        logger.info("Initialising profiles");
+
         if (!plugin.getDataFolder().exists() && !plugin.getDataFolder().mkdir()) {
-            plugin.getSLF4JLogger().error("No data folder available. Profiles will not be saved!");
+            logger.error("No data folder available. Profiles will not be saved!");
             prohibitWrite = true;
         }
 
         profileFolder = new File(plugin.getDataFolder(), "profiles");
         if (!profileFolder.exists() && !profileFolder.mkdir()) {
-            plugin.getSLF4JLogger().error("Failed to create profiles folder!");
+            logger.error("Failed to create profiles folder!");
             prohibitWrite = true;
         }
     }
@@ -141,17 +144,17 @@ public final class ProfileManager {
                 return serializer.fromJson(input, type);
             } catch (FileNotFoundException ex) {
                 // 标志错误，禁止后续写入操作
-                plugin.getSLF4JLogger().error("Path exists but read failed - check permissions and if it is a directory?");
+                logger.error("Path exists but read failed - check permissions and if it is a directory?");
                 return null;
             } catch (IOException ex) {
                 // 标志错误，禁止后续写入操作
-                plugin.getSLF4JLogger().error("Failed to read", ex);
+                logger.error("Failed to read", ex);
                 return null;
             } catch (JsonSyntaxException jse) {
-                plugin.getSLF4JLogger().warn("Invalid file syntax. Will override it.", jse);
+                logger.warn("Invalid file syntax. Will override it.", jse);
                 return null;
             } catch (JsonIOException ex) {
-                plugin.getSLF4JLogger().error("Failed to parse", ex);
+                logger.error("Failed to parse", ex);
                 return null;
             }
         } else {
@@ -171,9 +174,9 @@ public final class ProfileManager {
             serializer.toJson(profile, type, output);
         } catch (IOException ex) {
             // 标志错误，禁止后续写入操作
-            plugin.getSLF4JLogger().error("Failed to write to", ex);
+            logger.error("Failed to write to", ex);
         } catch (JsonIOException ex) {
-            plugin.getSLF4JLogger().error("Failed to write profile", ex);
+            logger.error("Failed to write profile", ex);
         }
     }
 
@@ -212,7 +215,7 @@ public final class ProfileManager {
     public void save() {
         if (prohibitWrite) {
             // 如果禁止，直接返回
-            plugin.getSLF4JLogger().warn("Write has been prohibited due to previous error.");
+            logger.warn("Write has been prohibited due to previous error.");
             return;
         }
 

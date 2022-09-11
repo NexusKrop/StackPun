@@ -7,21 +7,12 @@
 package io.github.nexuskrop.stackpun;
 
 import io.github.nexuskrop.stackpun.api.IStackPun;
-import io.github.nexuskrop.stackpun.data.ProfileManager;
 import io.github.nexuskrop.stackpun.frontend.commands.*;
-import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
-import io.github.nexuskrop.stackpun.players.ChatManager;
-import io.github.nexuskrop.stackpun.players.PlayerManager;
-import org.bukkit.GameRule;
-import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import x.nexuskrop.stackpun.event.InventoryListener;
-import x.nexuskrop.stackpun.net.NetworkManager;
 import x.nexuskrop.stackpun.net.StatusListener;
 import x.nexuskrop.stackpun.util.StackPunImpl;
-
-import java.io.File;
 
 /**
  * Provides initialisation service and main API access point for the StackPun plugin.
@@ -36,7 +27,6 @@ public class StackPun extends JavaPlugin {
 
     private static void setInstance(StackPun instance) {
         impl = new StackPunImpl(instance);
-        impl.initialise();
     }
 
     /**
@@ -45,9 +35,10 @@ public class StackPun extends JavaPlugin {
      * @return An instance of {@link StackPun} as {@link IStackPun}. Will always return the same
      * instance.
      */
-    public static IStackPun api() {
+    public static @NotNull IStackPun api() {
         return impl;
     }
+
     /**
      * Enables this {@link JavaPlugin} and initialises this plugin.
      */
@@ -55,6 +46,7 @@ public class StackPun extends JavaPlugin {
     public void onEnable() {
         this.saveDefaultConfig();
         setInstance(this);
+        impl.initialise(this);
 
         legacyCommandsAdd();
 
