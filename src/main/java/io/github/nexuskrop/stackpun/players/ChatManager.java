@@ -19,6 +19,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -121,7 +122,7 @@ public final class ChatManager implements Listener {
                 }
             }
 
-            if (!Bukkit.getServer().equals(source)) {
+            if (!(source instanceof ConsoleCommandSender)) {
                 Bukkit.getServer().sendMessage(msg);
             }
         }

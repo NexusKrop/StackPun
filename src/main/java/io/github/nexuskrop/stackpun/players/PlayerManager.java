@@ -61,7 +61,7 @@ public final class PlayerManager implements Listener, IReloadable {
      * @param message The message.
      */
     public void sendChatMessage(Player source, Player target, Component message) {
-        if (source == target) return; // See STAP-17
+        if (source == target) return;
 
         var profile = StackPun.api().profileManager().get(source);
         var selfProfile = StackPun.api().profileManager().get(target);
@@ -74,7 +74,7 @@ public final class PlayerManager implements Listener, IReloadable {
     }
 
     public void sendIdentifiedMessage(Player source, Player target, Component message, Identity identity) {
-        if (source == target) return; // See STAP-17
+        if (source == target) return;
 
         var profile = StackPun.api().profileManager().get(source);
         var selfProfile = StackPun.api().profileManager().get(target);
@@ -88,6 +88,6 @@ public final class PlayerManager implements Listener, IReloadable {
 
     @Override
     public void reload() {
-        var raw = StackPun.api().messageManager().getMini("ui.player_list.header");
+        // nothing to do
     }
 }

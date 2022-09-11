@@ -102,14 +102,14 @@ public final class ProfileManager {
         var file = new File(profileFolder, String.format("pf_%s.json", uuid));
 
         if (!file.exists()) {
-            var result = new PlayerProfile(player.getName());
+            var result = new PlayerProfile();
             saveProfile(file, result);
             newProfiles.put(uuid, result);
             return result;
         } else {
             var result = loadProfile(file);
             if (result == null) {
-                result = new PlayerProfile(player.getName());
+                result = new PlayerProfile();
                 saveProfile(file, result);
                 return result;
             }
@@ -128,19 +128,19 @@ public final class ProfileManager {
             try (var input = new FileReader(file)) {
                 var type = PlayerProfile.class;
                 return serializer.fromJson(input, type);
-            } catch (FileNotFoundException fnex) {
+            } catch (FileNotFoundException ex) {
                 // 标志错误，禁止后续写入操作
                 plugin.getSLF4JLogger().error("Path exists but read failed - check permissions and if it is a directory?");
                 return null;
-            } catch (IOException ioex) {
+            } catch (IOException ex) {
                 // 标志错误，禁止后续写入操作
-                plugin.getSLF4JLogger().error("Failed to read", ioex);
+                plugin.getSLF4JLogger().error("Failed to read", ex);
                 return null;
             } catch (JsonSyntaxException jse) {
                 plugin.getSLF4JLogger().warn("Invalid file syntax. Will override it.", jse);
                 return null;
-            } catch (JsonIOException jioe) {
-                plugin.getSLF4JLogger().error("Failed to parse", jioe);
+            } catch (JsonIOException ex) {
+                plugin.getSLF4JLogger().error("Failed to parse", ex);
                 return null;
             }
         } else {
@@ -158,11 +158,11 @@ public final class ProfileManager {
         try (var output = new FileWriter(Objects.requireNonNull(file))) {
             var type = profile.getClass();
             serializer.toJson(profile, type, output);
-        } catch (IOException ioex) {
+        } catch (IOException ex) {
             // 标志错误，禁止后续写入操作
-            plugin.getSLF4JLogger().error("Failed to write to", ioex);
-        } catch (JsonIOException jioe) {
-            plugin.getSLF4JLogger().error("Failed to write profile", jioe);
+            plugin.getSLF4JLogger().error("Failed to write to", ex);
+        } catch (JsonIOException ex) {
+            plugin.getSLF4JLogger().error("Failed to write profile", ex);
         }
     }
 
@@ -179,7 +179,7 @@ public final class ProfileManager {
         var uuid = Objects.requireNonNull(player).getUniqueId();
 
         return profiles.computeIfAbsent(uuid, (key -> {
-            var result = new PlayerProfile(player.getName());
+            var result = new PlayerProfile();
             profiles.put(uuid, result);
             return result;
         }));

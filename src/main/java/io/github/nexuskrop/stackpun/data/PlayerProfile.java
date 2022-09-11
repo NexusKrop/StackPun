@@ -18,24 +18,6 @@ import java.util.*;
  * @see ProfileManager
  */
 public class PlayerProfile implements Serializable {
-    /**
-     * Initialises a new instance of the {@link ProfileManager} class.
-     *
-     * @param playerName The name of the player.
-     */
-    public PlayerProfile(String playerName) {
-        name = playerName;
-    }
-
-    /**
-     * Initialises a new instance of the {@link ProfileManager} class.
-     */
-    public PlayerProfile() {
-        name = "___";
-    }
-
-    private final String name;
-
     private boolean muted;
 
     private boolean deafened;
@@ -49,13 +31,6 @@ public class PlayerProfile implements Serializable {
     private final List<UUID> blockedPlayers = new ArrayList<>();
 
     private transient ClientOption.ChatVisibility chatVisibility = ClientOption.ChatVisibility.FULL;
-
-    /**
-     * The name of the player when registering this player profile.
-     */
-    private String getName() {
-        return name;
-    }
 
     /**
      * Whether this user was muted.

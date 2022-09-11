@@ -17,6 +17,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -85,7 +86,7 @@ public interface StackCommand {
                 }
             }
 
-            if (!Bukkit.getServer().equals(source)) {
+            if (!(source instanceof ConsoleCommandSender)) {
                 Bukkit.getServer().sendMessage(msg);
             }
         }
