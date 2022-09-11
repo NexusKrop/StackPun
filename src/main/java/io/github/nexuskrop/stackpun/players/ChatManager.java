@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun.players;
 
 import com.destroystokyo.paper.ClientOption;
 import io.github.nexuskrop.stackpun.StackPun;
+import io.github.nexuskrop.stackpun.api.IStackPun;
 import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
 import io.github.nexuskrop.stackpun.util.Common;
 import io.papermc.paper.event.player.AsyncChatEvent;
@@ -16,8 +17,10 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import x.nexuskrop.stackpun.util.IReloadable;
+import x.nexuskrop.stackpun.util.Worlds;
+
 import org.bukkit.Bukkit;
-import org.bukkit.GameRule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.event.EventHandler;
@@ -26,17 +29,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public final class ChatManager implements Listener {
+public final class ChatManager implements Listener, IReloadable {
     private static final String SILENCED = "chat.silenced";
     private static final String VISIBILITY_OFF = "chat.visibility_off";
     private String formatCache;
     private Boolean passIdentityCache;
 
-    private final StackPun plugin;
+    private final IStackPun plugin = StackPun.api();
 
     public ChatManager(@NotNull StackPun self) {
-        plugin = self;
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        self.getServer().getPluginManager().registerEvents(this, self);
     }
 
     private String getFormat() {
@@ -55,7 +57,7 @@ public final class ChatManager implements Listener {
         return passIdentityCache;
     }
 
-    public void clearCache() {
+    public void reload() {
         formatCache = null;
         passIdentityCache = null;
     }
@@ -112,7 +114,7 @@ public final class ChatManager implements Listener {
                 .decorate(TextDecoration.ITALIC);
 
         // 检查游戏规则 sendCommandFeedback 是否启用
-        if (StackPun.api().isGameRuleEnabled(GameRule.SEND_COMMAND_FEEDBACK, true)) {
+        if (Worlds.overworld().isGameRule("sendCommandFeedback")) {
             // 如果启用，遍历所有人
             for (var player :
                     Bukkit.getServer().getOnlinePlayers()) {

@@ -50,6 +50,7 @@ public class StackPunImpl implements IStackPun {
         commandManager.addFromProject();
 
         configManager.addMonitored(playerManager);
+        configManager.addMonitored(chatManager);
     }
 
     @Override

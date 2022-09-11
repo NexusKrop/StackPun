@@ -9,6 +9,7 @@ package io.github.nexuskrop.stackpun.players;
 import com.destroystokyo.paper.ClientOption;
 import com.destroystokyo.paper.event.player.PlayerClientOptionsChangeEvent;
 import io.github.nexuskrop.stackpun.StackPun;
+import io.github.nexuskrop.stackpun.api.IStackPun;
 import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
@@ -16,15 +17,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.slf4j.Logger;
+
 import x.nexuskrop.stackpun.util.IReloadable;
 
 public final class PlayerManager implements Listener, IReloadable {
-    private final StackPun plugin;
+    private final IStackPun plugin = StackPun.api();
+    private final Logger logger;
     private Component listHeader;
 
     public PlayerManager(StackPun self) {
-        plugin = self;
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        logger = self.getSLF4JLogger();
+        self.getServer().getPluginManager().registerEvents(this, self);
         reload();
     }
 
@@ -32,14 +36,9 @@ public final class PlayerManager implements Listener, IReloadable {
     public void onPlayerJoin(PlayerJoinEvent event) {
         var player = event.getPlayer();
 
-        plugin.getSLF4JLogger().info("Player {} joined with client {}", player.getName(), player.getClientBrandName());
+        logger.info("Player {} joined with client {}", player.getName(), player.getClientBrandName());
         // 创建资料
-        var profile = plugin.profileManager().get(player);
-
-        if (!profile.hadWelcomed()) {
-            profile.setHadWelcomed(true);
-            StackCommand.sendMessageLoc(player, "frontend.welcome");
-        }
+        plugin.profileManager().ensure(player);
 
         player.sendPlayerListHeader(listHeader);
     }

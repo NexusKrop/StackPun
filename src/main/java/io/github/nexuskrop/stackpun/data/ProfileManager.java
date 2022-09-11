@@ -117,6 +117,17 @@ public final class ProfileManager {
         }
     }
 
+    public void ensure(@NotNull Player player) {
+        var uuid = Objects.requireNonNull(player).getUniqueId();
+        var file = new File(profileFolder, String.format("pf_%s.json", uuid));
+
+        if (!file.exists()) {
+            var result = new PlayerProfile();
+            saveProfile(file, result);
+            newProfiles.put(uuid, result);
+        }
+    }
+
     /**
      * Loads a profile from disk.
      *

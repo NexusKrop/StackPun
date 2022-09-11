@@ -17,15 +17,15 @@ import org.bukkit.entity.Player;
 import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 public class UnmuteCommand implements StackCommand {
-    private static final String UNMUTE_SELF_PERM = StackPun.cmdPerm("unmute.self");
-    private static final String UNMUTE_SELF_DENIED = "commands.unmute.self_denied";
+    private static final String UNMUTE_SELF_PERM = "stackpun.commands.unmute.self";
+    private static final String UNMUTE_SELF_DENIED = "stackpun.commands.unmute.self_denied";
     private static final String SUCCESS = "commands.unmute.success";
     private static final String NOT_MUTED = "commands.ummute.not_muted";
 
     @Override
     public void register() {
         new CommandAPICommand("unmute")
-                .withPermission(StackPun.cmdPerm("unmute"))
+                .withPermission("stackpun.commands.save-unmute")
                 .withArguments(new PlayerArgument("target"))
                 .executesConsole(this::execute)
                 .executesPlayer(this::execute)

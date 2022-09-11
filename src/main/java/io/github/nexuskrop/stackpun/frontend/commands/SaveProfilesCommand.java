@@ -20,7 +20,7 @@ public class SaveProfilesCommand implements StackCommand {
     @Override
     public void register() {
         new CommandAPICommand("save-profiles")
-                .withPermission(StackPun.cmdPerm("save-profiles"))
+                .withPermission("stackpun.commands.save-profiles")
                 .executes((sender, args) -> {
                     StackCommand.sendMessageLoc(sender, BEGIN);
                     CompletableFuture.runAsync(() -> StackPun.api().profileManager().save());

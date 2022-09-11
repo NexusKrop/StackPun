@@ -27,7 +27,7 @@ public class MuteCommand implements StackCommand {
     @Override
     public void register() {
         new CommandAPICommand("mute")
-                .withPermission(StackPun.cmdPerm("mute"))
+                .withPermission("stackpun.commands.mute")
                 .withArguments(new PlayerArgument("target"))
                 .executesConsole(this::execute)
                 .executesPlayer(this::execute)

@@ -35,7 +35,7 @@ public class BlipCommand implements StackCommand {
     @Override
     public void register() {
         new CommandAPICommand("blip")
-                .withPermission(StackPun.cmdPerm("blip"))
+                .withPermission("stackpun.commands.blip")
                 .withArguments(new PlayerArgument("target"))
                 .executesConsole(this::execute)
                 .executesPlayer(this::executePlayer)

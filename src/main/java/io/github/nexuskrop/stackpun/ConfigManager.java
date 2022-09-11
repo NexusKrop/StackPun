@@ -23,8 +23,6 @@ public final class ConfigManager {
 
     public void reload() {
         plugin.reloadConfig();
-
-        plugin.chatManager().clearCache();
         for (var monitored : monitoring) {
             monitored.reload();
         }
