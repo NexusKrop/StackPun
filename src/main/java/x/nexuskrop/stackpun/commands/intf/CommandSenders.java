@@ -10,6 +10,8 @@ import io.github.nexuskrop.stackpun.StackPun;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import x.nexuskrop.stackpun.util.Worlds;
+
 import org.bukkit.GameRule;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +19,8 @@ import org.jetbrains.annotations.NotNull;
 public final class CommandSenders {
     private CommandSenders() {
     }
+
+    private static final String SEND_COMMAND_FEEDBACK = GameRule.SEND_COMMAND_FEEDBACK.getName();
 
     /**
      * Sends a message to the sender indicating a command success.
@@ -29,14 +33,14 @@ public final class CommandSenders {
     }
 
     public static void sendSuccess(CommandSender target, @NotNull Component component) {
-        if (StackPun.api().isGameRuleEnabled(GameRule.SEND_COMMAND_FEEDBACK, true)) {
+        if (Worlds.overworld().isGameRule(SEND_COMMAND_FEEDBACK)) {
             target.sendMessage(component);
             StackPun.api().chatManager().broadcastSuccess(target, component);
         }
     }
 
     public static void sendSuccess(CommandSender target, @NotNull String id, @NotNull Component value) {
-        if (StackPun.api().isGameRuleEnabled(GameRule.SEND_COMMAND_FEEDBACK, true)) {
+        if (Worlds.overworld().isGameRule(SEND_COMMAND_FEEDBACK)) {
             var msg = MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(id),
                     Placeholder.component("value", value));
 

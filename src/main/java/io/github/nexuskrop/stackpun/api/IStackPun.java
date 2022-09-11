@@ -61,22 +61,5 @@ public interface IStackPun {
 
     NetworkManager networkManager();
 
-    /**
-     * Gets the overworld.
-     *
-     * @return An instance of {@link World} representing the overworld.
-     */
-    @Nullable
-    World overWorld();
-
     ConfigManager configManager();
-
-    /**
-     * Gets whether a game rule is enabled.
-     *
-     * @param gameRule The rule to check.
-     * @param def      The default value if unable to acquire such rule.
-     * @return The rule result.
-     */
-    boolean isGameRuleEnabled(GameRule<Boolean> gameRule, boolean def);
 }

@@ -17,7 +17,7 @@ public final class ConfigManager {
     private final StackPun plugin;
     private final List<IReloadable> monitoring = new ArrayList<>();
 
-    ConfigManager(StackPun stackPun) {
+    public ConfigManager(StackPun stackPun) {
         this.plugin = stackPun;
     }
 

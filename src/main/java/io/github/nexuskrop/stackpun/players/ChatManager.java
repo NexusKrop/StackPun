@@ -22,6 +22,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -33,7 +34,7 @@ public final class ChatManager implements Listener {
 
     private final StackPun plugin;
 
-    public ChatManager(StackPun self) {
+    public ChatManager(@NotNull StackPun self) {
         plugin = self;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }

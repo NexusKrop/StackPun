@@ -19,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import x.nexuskrop.stackpun.event.InventoryListener;
 import x.nexuskrop.stackpun.net.NetworkManager;
 import x.nexuskrop.stackpun.net.StatusListener;
+import x.nexuskrop.stackpun.util.StackPunImpl;
 
 import java.io.File;
 
@@ -30,20 +31,12 @@ import java.io.File;
  * instance as it will mess up the environment.
  * @see org.bukkit.plugin.java.JavaPlugin
  */
-public class StackPun extends JavaPlugin implements IStackPun {
-    private static StackPun instance;
-
-    private x.nexuskrop.stackpun.commands.CommandManager commandManagerV2;
-    private ChatManager chatManager;
-    private ProfileManager profileManager;
-    private PlayerManager playerManager;
-    private ConfigManager configManager;
-    private NetworkManager networkManager;
-
-    private MessageManager messageManager;
+public class StackPun extends JavaPlugin {
+    private static StackPunImpl impl;
 
     private static void setInstance(StackPun instance) {
-        StackPun.instance = instance;
+        impl = new StackPunImpl(instance);
+        impl.initialise();
     }
 
     /**
@@ -53,91 +46,21 @@ public class StackPun extends JavaPlugin implements IStackPun {
      * instance.
      */
     public static IStackPun api() {
-        return instance;
+        return impl;
     }
-
-    @Override
-    public x.nexuskrop.stackpun.commands.CommandManager commandManagerV2() {
-        return commandManagerV2;
-    }
-
-    public ProfileManager profileManager() {
-        return profileManager;
-    }
-
-    public MessageManager messageManager() {
-        return messageManager;
-    }
-
-    public ConfigManager configManager() {
-        return configManager;
-    }
-
-    @Override
-    public PlayerManager playerManager() {
-        return playerManager;
-    }
-
-    public NetworkManager networkManager() {
-        return networkManager;
-    }
-
-    @Override
-    @Nullable
-    public World overWorld() {
-        return null;
-    }
-
-    @Override
-    public boolean isGameRuleEnabled(GameRule<Boolean> gameRule, boolean def) {
-        var ow = overWorld();
-        if (ow != null) {
-            return Boolean.TRUE.equals(ow.getGameRuleValue(gameRule));
-        } else {
-            return def;
-        }
-    }
-
-    public ChatManager chatManager() {
-        return chatManager;
-    }
-
-    public static String cmdPerm(String command) {
-        return "stackpun.commands." + command;
-    }
-
     /**
      * Enables this {@link JavaPlugin} and initialises this plugin.
      */
     @Override
     public void onEnable() {
-        setInstance(this);
         this.saveDefaultConfig();
-
-        configManager = new ConfigManager(this);
-
-        getSLF4JLogger().info("StackPun Service instantiated");
-
-        messageManager = new MessageManager(new File(this.getDataFolder(), "msg.properties"), this.getSLF4JLogger());
-
-        chatManager = new ChatManager(this);
-
-        profileManager = new ProfileManager(this);
-        profileManager.init();
-
-        playerManager = new PlayerManager(this);
-        configManager.addMonitored(playerManager);
-
-        networkManager = new NetworkManager(this);
-
-        commandManagerV2 = new x.nexuskrop.stackpun.commands.CommandManager(this.getSLF4JLogger());
-        commandManagerV2.addFromProject();
+        setInstance(this);
 
         legacyCommandsAdd();
 
         var listener = new StatusListener(this.getSLF4JLogger());
         getServer().getPluginManager().registerEvents(listener, this);
-        configManager.addMonitored(listener);
+        impl.configManager().addMonitored(listener);
         getServer().getPluginManager().registerEvents(new InventoryListener(), this);
     }
 
@@ -145,7 +68,7 @@ public class StackPun extends JavaPlugin implements IStackPun {
      * Register all commands in the command manager.
      */
     public void legacyCommandsAdd() {
-        commandManagerV2.addLegacy(BlipCommand.class,
+        impl.commandManagerV2().addLegacy(BlipCommand.class,
                 UnmuteCommand.class,
                 MuteCommand.class,
                 SaveProfilesCommand.class,
@@ -165,6 +88,8 @@ public class StackPun extends JavaPlugin implements IStackPun {
      */
     @Override
     public void onDisable() {
+        var profileManager = impl.profileManager();
+
         profileManager.save();
         // 禁止再写入，保存
         profileManager.prohibitWrite(true);
