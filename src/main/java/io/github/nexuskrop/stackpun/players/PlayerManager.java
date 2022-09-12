@@ -20,7 +20,6 @@ import x.nexuskrop.stackpun.util.IReloadable;
 
 public final class PlayerManager implements Listener, IReloadable {
     private final Logger logger;
-    private Component listHeader;
 
     public PlayerManager(Logger self) {
         logger = self;
@@ -38,8 +37,6 @@ public final class PlayerManager implements Listener, IReloadable {
         logger.info("Player {} joined with client {}", player.getName(), player.getClientBrandName());
         // 创建资料
         StackPun.api().profileManager().ensure(player);
-
-        player.sendPlayerListHeader(listHeader);
     }
 
     @EventHandler

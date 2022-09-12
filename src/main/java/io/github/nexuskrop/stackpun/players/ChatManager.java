@@ -8,7 +8,6 @@ package io.github.nexuskrop.stackpun.players;
 
 import com.destroystokyo.paper.ClientOption;
 import io.github.nexuskrop.stackpun.StackPun;
-import io.github.nexuskrop.stackpun.api.IStackPun;
 import io.github.nexuskrop.stackpun.frontend.commands.StackCommand;
 import io.github.nexuskrop.stackpun.util.Common;
 import io.papermc.paper.event.player.AsyncChatEvent;
@@ -33,8 +32,6 @@ public final class ChatManager implements Listener, IReloadable {
     private static final String VISIBILITY_OFF = "chat.visibility_off";
     private String formatCache;
     private Boolean passIdentityCache;
-
-    private final IStackPun plugin = StackPun.api();
 
     public void init(@NotNull StackPun self) {
         self.getSLF4JLogger().info("Initialising chat manager");
@@ -65,7 +62,7 @@ public final class ChatManager implements Listener, IReloadable {
     @EventHandler
     public void onChatMessage(AsyncChatEvent event) {
         var player = event.getPlayer();
-        var profile = plugin.profileManager().get(player);
+        var profile = StackPun.api().profileManager().get(player);
 
         if (profile.getChatVisibility() != ClientOption.ChatVisibility.FULL) {
             StackCommand.sendErrorLoc(player, VISIBILITY_OFF);

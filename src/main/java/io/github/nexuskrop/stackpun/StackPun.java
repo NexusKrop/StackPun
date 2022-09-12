@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun;
 
 import io.github.nexuskrop.stackpun.api.IStackPun;
 import io.github.nexuskrop.stackpun.frontend.commands.*;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import x.nexuskrop.stackpun.event.InventoryListener;
@@ -27,15 +28,25 @@ public class StackPun extends JavaPlugin {
 
     private static void setInstance(StackPun instance) {
         impl = new StackPunImpl(instance);
+        initialised = true;
     }
+
+    private static boolean initialised;
 
     /**
      * Gets the API instance of this plugin.
      *
      * @return An instance of {@link StackPun} as {@link IStackPun}. Will always return the same
      * instance.
+     * @throws IllegalStateException The StackPun API is not initialised.
      */
     public static @NotNull IStackPun api() {
+        if (!initialised) {
+            Bukkit.getServer().getLogger().info("NOTE: StackPun API cannot be called if it is not yet initialised.");
+            Bukkit.getServer().getLogger().info("NOTE: DO NOT access StackPun API in-line at declaration or in constructor.");
+            throw new IllegalStateException("StackPun API is not yet initialised.");
+        }
+
         return impl;
     }
 
@@ -80,6 +91,12 @@ public class StackPun extends JavaPlugin {
      */
     @Override
     public void onDisable() {
+        if (!initialised) {
+            getSLF4JLogger().warn("Disabled before initialisation is ready. This suggests exception being thrown WHILE the plugin is loading.");
+            getSLF4JLogger().warn("Check your stacktrace and fix the issue (usually in one of the managers).");
+            return;
+        }
+
         var profileManager = impl.profileManager();
 
         profileManager.save();
