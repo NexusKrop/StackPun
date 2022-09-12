@@ -19,6 +19,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
@@ -104,6 +105,14 @@ public final class ChatManager implements Listener, IReloadable {
         event.setCancelled(true);
     }
 
+    /**
+     * Broadcasts a success message.
+     *
+     * @param source    The source.
+     * @param component The component.
+     * @deprecated Because of unfixable issue of sending a message. You can still use it but no more support will be provided for it.
+     */
+    @Deprecated(since = "0.1.1", forRemoval = false)
     public void broadcastSuccess(CommandSender source, Component component) {
         // 合成消息（chat.type.admin）
         var msg = Component.translatable("chat.type.admin")
@@ -115,6 +124,11 @@ public final class ChatManager implements Listener, IReloadable {
             // 如果启用，遍历所有人
             for (var player :
                     Bukkit.getServer().getOnlinePlayers()) {
+                if (source instanceof Player ply && ply.equals(player)) {
+                    // 如果是玩家且是命令执行者，跳过玩家
+                    continue;
+                }
+
                 // 有权限且不是命令的执行者
                 if (!source.equals(player) && player.hasPermission("stackpun.commands.generic.broadcast")) {
                     // 发送消息
