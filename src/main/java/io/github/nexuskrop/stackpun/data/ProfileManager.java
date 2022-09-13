@@ -204,9 +204,21 @@ public final class ProfileManager {
      *
      * @param player  The player to set profile.
      * @param profile The profile to set.
+     * @deprecated In favour of {@link ProfileManager#put(Player, PlayerProfile)}
      */
+    @Deprecated(forRemoval = true, since = "0.1.2")
     public void putProfile(@NotNull Player player, @NotNull PlayerProfile profile) {
         profiles.put(Objects.requireNonNull(player).getUniqueId(), Objects.requireNonNull(profile));
+    }
+
+    /**
+     * Puts the specified profile for the specified player.
+     *
+     * @param player  The player.
+     * @param profile The profile.
+     */
+    public void put(@NotNull Player player, @NotNull PlayerProfile profile) {
+        newProfiles.put(player.getUniqueId(), profile);
     }
 
     /**

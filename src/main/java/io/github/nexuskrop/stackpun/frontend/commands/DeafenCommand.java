@@ -40,7 +40,7 @@ public class DeafenCommand implements StackCommand {
                         CommandSenders.sendSuccess(sender, SUCCESS_ON);
                     }
 
-                    StackPun.api().profileManager().putProfile(sender, profile);
+                    StackPun.api().profileManager().put(sender, profile);
                 });
     }
 }

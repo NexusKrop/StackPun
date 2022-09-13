@@ -60,5 +60,7 @@ public class IgnoreCommand implements StackCommand {
             profile.getBlockedPlayers().add(uuid);
             CommandSenders.sendSuccess(sender, SUCCESS_ADD, player.displayName());
         }
+
+        StackPun.api().profileManager().put(player, profile);
     }
 }

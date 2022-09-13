@@ -1,5 +1,5 @@
 name: StackPun
-version: 0.1.0-alpha
+version: 0.1.1-alpha
 main: io.github.nexuskrop.stackpun.StackPun
 api-version: "1.19"
 prefix: StaP
