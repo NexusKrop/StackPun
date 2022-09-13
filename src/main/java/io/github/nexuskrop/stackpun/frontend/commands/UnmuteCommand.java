@@ -18,7 +18,7 @@ import x.nexuskrop.stackpun.commands.intf.CommandSenders;
 
 public class UnmuteCommand implements StackCommand {
     private static final String UNMUTE_SELF_PERM = "stackpun.commands.unmute.self";
-    private static final String UNMUTE_SELF_DENIED = "stackpun.commands.unmute.self_denied";
+    private static final String UNMUTE_SELF_DENIED = "commands.unmute.self_denied";
     private static final String SUCCESS = "commands.unmute.success";
     private static final String NOT_MUTED = "commands.ummute.not_muted";
 
@@ -38,11 +38,6 @@ public class UnmuteCommand implements StackCommand {
 
         if (!profile.isMuted()) {
             StackCommand.failLoc(NOT_MUTED);
-            return;
-        }
-
-        if (player == sender || !player.hasPermission(UNMUTE_SELF_PERM)) {
-            StackCommand.failLoc(UNMUTE_SELF_DENIED);
             return;
         }
 
