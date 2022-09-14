@@ -9,7 +9,14 @@ package io.github.nexuskrop.stackpun;
 import io.github.nexuskrop.stackpun.api.IStackPun;
 import io.github.nexuskrop.stackpun.frontend.commands.*;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.annotation.dependency.Dependency;
+import org.bukkit.plugin.java.annotation.plugin.ApiVersion;
+import org.bukkit.plugin.java.annotation.plugin.Description;
+import org.bukkit.plugin.java.annotation.plugin.LogPrefix;
+import org.bukkit.plugin.java.annotation.plugin.Plugin;
+import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import org.jetbrains.annotations.NotNull;
 import x.nexuskrop.stackpun.event.InventoryListener;
 import x.nexuskrop.stackpun.net.StatusListener;
@@ -23,12 +30,25 @@ import x.nexuskrop.stackpun.util.StackPunImpl;
  * instance as it will mess up the environment.
  * @see org.bukkit.plugin.java.JavaPlugin
  */
+@Plugin(name = "StackPun", version = "0.1.3")
+@Description("A NexusKrop plugin to reborn the Stack project")
+@Author("NexusKrop Project")
+@ApiVersion(ApiVersion.Target.v1_19)
+@Dependency("CommandAPI")
+@Dependency("ProtocolLib")
+@LogPrefix("StaP")
 public class StackPun extends JavaPlugin {
     private static StackPunImpl impl;
+    private static PluginDescriptionFile descriptionFile;
 
     private static void setInstance(StackPun instance) {
         impl = new StackPunImpl(instance);
         initialised = true;
+        descriptionFile = instance.getDescription();
+    }
+
+    public static PluginDescriptionFile description() {
+        return descriptionFile;
     }
 
     private static boolean initialised;

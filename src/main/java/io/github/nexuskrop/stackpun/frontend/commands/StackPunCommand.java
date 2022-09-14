@@ -19,7 +19,6 @@ public class StackPunCommand implements StackCommand {
     private static final String VERSION_APP_NAME = "commands.version.appName";
     private static final String VERSION_ATTRIBUTE = "commands.version.attribute";
     private static final String VERSION_VER = "commands.version.ver";
-    private static final String VERSION_NO_PRODUCT = "commands.version.no_product";
 
     @Override
     public void register() {
@@ -36,16 +35,11 @@ public class StackPunCommand implements StackCommand {
     }
 
     private void versionExecute(CommandSender sender, Object[] args) throws WrapperCommandSyntaxException {
-        var product = Common.productData();
+        var version = StackPun.description();
 
-        if (product == null) {
-            StackCommand.failLoc(VERSION_NO_PRODUCT);
-            return;
-        }
-
-        StackCommand.sendMessageVal(sender, VERSION_APP_NAME, Common.APP_NAME);
+        StackCommand.sendMessageVal(sender, VERSION_APP_NAME, version.getName());
         StackCommand.sendMessageVal(sender, VERSION_ATTRIBUTE, Common.AUTHOR);
-        StackCommand.sendMessageVal(sender, VERSION_VER, product.version);
+        StackCommand.sendMessageVal(sender, VERSION_VER, version.getVersion());
     }
 
     private void reloadExecute(CommandSender sender, Object[] args) {

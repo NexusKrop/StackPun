@@ -72,8 +72,8 @@ public class CommandManager {
         // 创建 CommandAPI 实例
         var apiCommand = new CommandAPICommand(anno.name())
                 .withPermission(String.format("stackpun.commands.%s", anno.name()))
-                .withHelp(msgManager.get(String.format("stackpun.commands.%s.help_short", anno.name())),
-                        msgManager.get(String.format("stackpun.commands.%s.help_full", anno.name())));
+                .withHelp(msgManager.get(String.format("commands.%s.help_short", anno.name())),
+                        msgManager.get(String.format("commands.%s.help_full", anno.name())));
 
         try {
             // 创建选中命令的实例

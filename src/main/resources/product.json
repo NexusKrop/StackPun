@@ -4,6 +4,7 @@
   "commands": [
     "V2TestCommand",
     "TrollCommand",
-    "ItRenameCommand"
+    "ItRenameCommand",
+    "PreferenceCommand"
   ]
 }
