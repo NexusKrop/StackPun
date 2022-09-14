@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun;
 
 import io.github.nexuskrop.stackpun.api.IStackPun;
 import io.github.nexuskrop.stackpun.frontend.commands.*;
+import io.github.nexuskrop.stackpun.worlds.GameEventsHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -85,6 +86,7 @@ public class StackPun extends JavaPlugin {
         getServer().getPluginManager().registerEvents(listener, this);
         impl.configManager().addMonitored(listener);
         getServer().getPluginManager().registerEvents(new InventoryListener(), this);
+        getServer().getPluginManager().registerEvents(new GameEventsHandler(), this);
     }
 
     /**
