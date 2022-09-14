@@ -10,10 +10,10 @@
 
     <groupId>x.nexuskrop</groupId>
     <artifactId>StackPun</artifactId>
-    <version>0.1.2-alpha</version>
+    <version>0.1.3-alpha</version>
 
     <name>StackPun</name>
-    <url>https://bitbucket.org/nexuskrop/stackpun/</url>
+    <url>https://github.com/nexuskrop/stackpun/</url>
 
     <inceptionYear>2022</inceptionYear>
     <licenses>
