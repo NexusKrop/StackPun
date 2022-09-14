@@ -23,10 +23,10 @@ public class SilenceCommand implements StackCommand {
                     var profile = StackPun.api().profileManager().get(sender);
 
                     if (profile.isSilenced()) {
-                        profile.setSilenced(false);
+                        profile.isSilenced(false);
                         CommandSenders.sendSuccess(sender, SUCCESS_OFF);
                     } else {
-                        profile.setSilenced(true);
+                        profile.isSilenced(true);
                         CommandSenders.sendSuccess(sender, SUCCESS_ON);
                     }
 

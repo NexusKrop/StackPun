@@ -44,7 +44,7 @@ public final class PlayerManager implements Listener, IReloadable {
         var player = event.getPlayer();
         var profile = StackPun.api().profileManager().get(player);
 
-        profile.setChatVisibility(event.getChatVisibility());
+        profile.chatVisibility(event.getChatVisibility());
     }
 
     /**
@@ -62,8 +62,8 @@ public final class PlayerManager implements Listener, IReloadable {
         var selfProfile = StackPun.api().profileManager().get(target);
 
         // 是否没有被拉黑，接收者也没有deafened
-        if (selfProfile.getChatVisibility() == ClientOption.ChatVisibility.FULL && !selfProfile.isDeafened() && !profile.getBlockedPlayers().contains(target.getUniqueId())
-                && !selfProfile.getBlockedPlayers().contains(source.getUniqueId())) {
+        if (selfProfile.chatVisibility() == ClientOption.ChatVisibility.FULL && !selfProfile.isDeafened() && !profile.blockedPlayers().contains(target.getUniqueId())
+                && !selfProfile.blockedPlayers().contains(source.getUniqueId())) {
             target.sendMessage(message);
         }
     }
@@ -75,8 +75,8 @@ public final class PlayerManager implements Listener, IReloadable {
         var selfProfile = StackPun.api().profileManager().get(target);
 
         // 是否没有被拉黑，接收者也没有deafened
-        if (selfProfile.getChatVisibility() == ClientOption.ChatVisibility.FULL && !selfProfile.isDeafened() && !profile.getBlockedPlayers().contains(target.getUniqueId())
-                && !selfProfile.getBlockedPlayers().contains(source.getUniqueId())) {
+        if (selfProfile.chatVisibility() == ClientOption.ChatVisibility.FULL && !selfProfile.isDeafened() && !profile.blockedPlayers().contains(target.getUniqueId())
+                && !selfProfile.blockedPlayers().contains(source.getUniqueId())) {
             target.sendMessage(identity, message);
         }
     }

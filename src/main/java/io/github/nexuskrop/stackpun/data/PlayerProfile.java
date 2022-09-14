@@ -7,6 +7,7 @@
 package io.github.nexuskrop.stackpun.data;
 
 import com.destroystokyo.paper.ClientOption;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.*;
@@ -25,8 +26,6 @@ public class PlayerProfile implements Serializable {
     private boolean silenced;
 
     private final Map<String, Boolean> preferences = new HashMap<>();
-
-    private boolean hadWelcomed;
 
     private final List<UUID> blockedPlayers = new ArrayList<>();
 
@@ -49,11 +48,29 @@ public class PlayerProfile implements Serializable {
         return preferences.get(id);
     }
 
+    /**
+     * Stub for setting preferences.
+     *
+     * @param id    The ID.
+     * @param value The value.
+     * @deprecated In favour of {@link PlayerProfile#putPreferences(String, boolean)}
+     */
+    @Deprecated(since = "0.1.3-alpha", forRemoval = true)
     public void setPreferences(String id, boolean value) {
+        putPreferences(id, value);
+    }
+
+    /**
+     * Sets the specified preference identified by the specified ID to the specified value.
+     *
+     * @param id    The ID of the preference to set.
+     * @param value The value to set to.
+     */
+    public void putPreferences(@NotNull String id, boolean value) {
         preferences.put(id, value);
     }
 
-    public void setMuted(boolean muted) {
+    public void isMuted(boolean muted) {
         this.muted = muted;
     }
 
@@ -66,7 +83,7 @@ public class PlayerProfile implements Serializable {
         return deafened;
     }
 
-    public void setDeafened(boolean deafened) {
+    public void isDeafened(boolean deafened) {
         this.deafened = deafened;
     }
 
@@ -79,36 +96,34 @@ public class PlayerProfile implements Serializable {
         return silenced;
     }
 
-    public void setSilenced(boolean silenced) {
+    public void isSilenced(boolean silenced) {
         this.silenced = silenced;
-    }
-
-    /**
-     * Whether this user has had welcome message displayed.
-     */
-    public boolean hadWelcomed() {
-        return hadWelcomed;
-    }
-
-    public void setHadWelcomed(boolean hadWelcomed) {
-        this.hadWelcomed = hadWelcomed;
     }
 
     /**
      * A list of all blocked players.
      */
-    public List<UUID> getBlockedPlayers() {
+    public List<UUID> blockedPlayers() {
         return blockedPlayers;
     }
 
     /**
-     * The chat visibility of this instance.
+     * Gets the chat visibility option of the client of the player associated with this instance.
+     *
+     * @return The chat visibility option of the client of the player associated with this instance.
      */
-    public ClientOption.ChatVisibility getChatVisibility() {
+    public ClientOption.ChatVisibility chatVisibility() {
         return chatVisibility;
     }
 
-    public void setChatVisibility(ClientOption.ChatVisibility chatVisibility) {
+    /**
+     * Sets the chat visibility option of the client of the player associated with this instance.
+     *
+     * @param chatVisibility The value to set to.
+     * @apiNote Do not call this API if you are not the manager who is responsible for updating this,
+     * otherwise you screw up this config until the player changes their settings.
+     */
+    public void chatVisibility(ClientOption.ChatVisibility chatVisibility) {
         this.chatVisibility = chatVisibility;
     }
 }

@@ -41,7 +41,7 @@ public class UnmuteCommand implements StackCommand {
             return;
         }
 
-        profile.setMuted(false);
+        profile.isMuted(false);
         StackPun.api().profileManager().put(player, profile);
 
         var feedback = MiniMessage.miniMessage().deserialize(StackPun.api().messageManager().get(SUCCESS),

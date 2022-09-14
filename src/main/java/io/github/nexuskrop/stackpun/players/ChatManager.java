@@ -65,7 +65,7 @@ public final class ChatManager implements Listener, IReloadable {
         var player = event.getPlayer();
         var profile = StackPun.api().profileManager().get(player);
 
-        if (profile.getChatVisibility() != ClientOption.ChatVisibility.FULL) {
+        if (profile.chatVisibility() != ClientOption.ChatVisibility.FULL) {
             StackCommand.sendErrorLoc(player, VISIBILITY_OFF);
             event.setCancelled(true);
             return;

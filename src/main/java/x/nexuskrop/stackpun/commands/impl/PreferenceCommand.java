@@ -21,7 +21,7 @@ public class PreferenceCommand implements PunCommand {
                         new BooleanArgument("value"))
                 .executesPlayer((sender, args) -> {
                     var profile = StackPun.api().profileManager().get(sender);
-                    profile.setPreferences((String) args[0], (boolean) args[1]);
+                    profile.putPreferences((String) args[0], (boolean) args[1]);
                 });
     }
 }

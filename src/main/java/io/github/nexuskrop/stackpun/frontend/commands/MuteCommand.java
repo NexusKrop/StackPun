@@ -45,7 +45,7 @@ public class MuteCommand implements StackCommand {
             StackCommand.failLoc(ALREADY_MUTED);
         } else {
             // 设置资料内禁言为 true
-            profile.setMuted(true);
+            profile.isMuted(true);
             StackPun.api().profileManager().put(player, profile);
             CommandSenders.sendSuccess(sender, MiniMessage.miniMessage().deserialize(
                     StackPun.api().messageManager().get(SUCCESS),

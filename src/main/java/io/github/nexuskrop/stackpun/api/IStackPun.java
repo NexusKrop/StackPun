@@ -7,13 +7,11 @@
 package io.github.nexuskrop.stackpun.api;
 
 import io.github.nexuskrop.stackpun.ConfigManager;
+import io.github.nexuskrop.stackpun.StackPun;
 import io.github.nexuskrop.stackpun.data.ProfileManager;
 import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
 import io.github.nexuskrop.stackpun.players.ChatManager;
 import io.github.nexuskrop.stackpun.players.PlayerManager;
-import org.bukkit.GameRule;
-import org.bukkit.World;
-import org.jetbrains.annotations.Nullable;
 import x.nexuskrop.stackpun.commands.CommandManager;
 import x.nexuskrop.stackpun.net.NetworkManager;
 
@@ -21,7 +19,8 @@ import x.nexuskrop.stackpun.net.NetworkManager;
  * Represents the API interface for StackPun plugin.
  *
  * @author WithLithum
- * @see io.github.nexuskrop.stackpun.StackPun
+ * @see StackPun#api()
+ * @see x.nexuskrop.stackpun.util.StackPunImpl
  */
 public interface IStackPun {
     /**

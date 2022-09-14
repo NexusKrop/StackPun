@@ -52,7 +52,7 @@ public class BlipCommand implements StackCommand {
             StackCommand.failLoc(StackCommand.MESSAGE_MUTED);
         }
 
-        if (profile.getBlockedPlayers().contains(pl.getUniqueId())) {
+        if (profile.blockedPlayers().contains(pl.getUniqueId())) {
             StackCommand.failLoc(BLOCKED_OTHER);
         }
 
@@ -61,7 +61,7 @@ public class BlipCommand implements StackCommand {
         }
 
         var pf = StackPun.api().profileManager().get(pl);
-        if (pf.getBlockedPlayers().contains(player.getUniqueId())) {
+        if (pf.blockedPlayers().contains(player.getUniqueId())) {
             StackCommand.failLoc(BLOCKED_SELF);
         }
 
