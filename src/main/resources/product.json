@@ -5,6 +5,7 @@
     "V2TestCommand",
     "TrollCommand",
     "ItRenameCommand",
-    "PreferenceCommand"
+    "PreferenceCommand",
+    "BedCommand"
   ]
 }
