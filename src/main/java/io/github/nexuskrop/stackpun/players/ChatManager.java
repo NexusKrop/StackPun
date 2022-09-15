@@ -30,8 +30,9 @@ public final class ChatManager implements Listener {
     public void onChatMessage(AsyncChatEvent event) {
         var player = event.getPlayer();
         var profile = StackPun.api().profileManager().get(player);
+        var setting = StackPun.api().playerManager().getSettings(player);
 
-        if (profile.chatVisibility() != ClientOption.ChatVisibility.FULL) {
+        if (setting.chatVisibility() != ClientOption.ChatVisibility.FULL) {
             StackCommand.sendErrorLoc(player, VISIBILITY_OFF);
             event.setCancelled(true);
             return;

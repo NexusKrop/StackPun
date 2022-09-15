@@ -26,8 +26,9 @@ public class DeafenCommand implements StackCommand {
                 .withHelp("Deafen yourself", "Deafens yourself.")
                 .executesPlayer((sender, args) -> {
                     var profile = StackPun.api().profileManager().get(sender);
+                    var settings = StackPun.api().playerManager().getSettings(sender);
 
-                    if (profile.chatVisibility() != ClientOption.ChatVisibility.FULL) {
+                    if (settings.chatVisibility() != ClientOption.ChatVisibility.FULL) {
                         StackCommand.failLoc(CHAT_OFF);
                         return;
                     }

@@ -17,9 +17,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.slf4j.Logger;
 import x.nexuskrop.stackpun.util.IReloadable;
+import x.nexuskrop.stackpun.util.models.PlayerSettings;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public final class PlayerManager implements Listener, IReloadable {
     private final Logger logger;
+
+    private final Map<UUID, PlayerSettings> settingsMap = new HashMap<>();
 
     public PlayerManager(Logger self) {
         logger = self;
@@ -39,12 +46,42 @@ public final class PlayerManager implements Listener, IReloadable {
         StackPun.api().profileManager().ensure(player);
     }
 
+    /**
+     * Gets the settings entries of the specified player.
+     *
+     * @param uuid The unique identifier of the specified player.
+     * @return The value.
+     */
+    public PlayerSettings getSettings(UUID uuid) {
+        if (!settingsMap.containsKey(uuid)) {
+            settingsMap.put(uuid, new PlayerSettings());
+        }
+
+        return settingsMap.get(uuid);
+    }
+
+    /**
+     * Gets the settings entries of the specified player.
+     *
+     * @param player The player.
+     * @return The value.
+     * @apiNote If you already have UUID, you should call {@link PlayerManager#getSettings(UUID)}.
+     */
+    public PlayerSettings getSettings(Player player) {
+        return getSettings(player.getUniqueId());
+    }
+
     @EventHandler
     public void onOptionChange(PlayerClientOptionsChangeEvent event) {
-        var player = event.getPlayer();
-        var profile = StackPun.api().profileManager().get(player);
+        var uuid = event.getPlayer().getUniqueId();
 
-        profile.chatVisibility(event.getChatVisibility());
+        var settings = getSettings(uuid);
+
+        // 开始设置所有值
+        settings.chatVisibility(event.getChatVisibility());
+        // 结束设置
+
+        settingsMap.put(uuid, settings);
     }
 
     /**
@@ -59,11 +96,12 @@ public final class PlayerManager implements Listener, IReloadable {
     @Deprecated(since = "0.1.4", forRemoval = true)
     public void sendChatMessage(Player source, Player target, Component message) {
         if (source == target) return;
-        
+
         var selfProfile = StackPun.api().profileManager().get(target);
+        var settings = getSettings(target);
 
         // 是否没有被拉黑，接收者也没有deafened
-        if (selfProfile.chatVisibility() == ClientOption.ChatVisibility.FULL && !selfProfile.isDeafened()) {
+        if (settings.chatVisibility() == ClientOption.ChatVisibility.FULL && !selfProfile.isDeafened()) {
             target.sendMessage(message);
         }
     }
@@ -76,9 +114,10 @@ public final class PlayerManager implements Listener, IReloadable {
         if (source == target) return;
 
         var selfProfile = StackPun.api().profileManager().get(target);
+        var settings = getSettings(target);
 
         // 是否没有被拉黑，接收者也没有deafened
-        if (selfProfile.chatVisibility() == ClientOption.ChatVisibility.FULL && !selfProfile.isDeafened()) {
+        if (settings.chatVisibility() == ClientOption.ChatVisibility.FULL && !selfProfile.isDeafened()) {
             target.sendMessage(identity, message);
         }
     }

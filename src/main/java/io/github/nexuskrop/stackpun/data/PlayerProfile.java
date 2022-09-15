@@ -8,6 +8,7 @@ package io.github.nexuskrop.stackpun.data;
 
 import com.destroystokyo.paper.ClientOption;
 import org.jetbrains.annotations.NotNull;
+import x.nexuskrop.stackpun.util.models.PlayerSettings;
 
 import java.io.Serializable;
 import java.util.*;
@@ -114,7 +115,9 @@ public class PlayerProfile implements Serializable {
      * Gets the chat visibility option of the client of the player associated with this instance.
      *
      * @return The chat visibility option of the client of the player associated with this instance.
+     * @deprecated In favour of {@link PlayerSettings#chatVisibility()}
      */
+    @Deprecated(forRemoval = true, since = "0.1.4-alpha")
     public ClientOption.ChatVisibility chatVisibility() {
         return chatVisibility;
     }
@@ -125,7 +128,9 @@ public class PlayerProfile implements Serializable {
      * @param chatVisibility The value to set to.
      * @apiNote Do not call this API if you are not the manager who is responsible for updating this,
      * otherwise you screw up this config until the player changes their settings.
+     * @deprecated In favour of {@link PlayerSettings#chatVisibility(ClientOption.ChatVisibility)}
      */
+    @Deprecated(forRemoval = true, since = "0.1.4-alpha")
     public void chatVisibility(ClientOption.ChatVisibility chatVisibility) {
         this.chatVisibility = chatVisibility;
     }
