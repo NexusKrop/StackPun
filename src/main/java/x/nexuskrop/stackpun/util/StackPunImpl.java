@@ -60,7 +60,6 @@ public class StackPunImpl implements IStackPun {
         commandManager.addFromProject();
 
         configManager.addMonitored(playerManager);
-        configManager.addMonitored(chatManager);
         self.getSLF4JLogger().info("Finished StackPun managers initialisation");
     }
 
