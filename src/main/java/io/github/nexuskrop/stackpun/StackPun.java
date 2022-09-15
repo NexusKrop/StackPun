@@ -31,7 +31,7 @@ import x.nexuskrop.stackpun.util.StackPunImpl;
  * instance as it will mess up the environment.
  * @see org.bukkit.plugin.java.JavaPlugin
  */
-@Plugin(name = "StackPun", version = "0.1.3")
+@Plugin(name = "StackPun", version = "0.1.4-alpha")
 @Description("A NexusKrop plugin to reborn the Stack project")
 @Author("NexusKrop Project")
 @ApiVersion(ApiVersion.Target.v1_19)
