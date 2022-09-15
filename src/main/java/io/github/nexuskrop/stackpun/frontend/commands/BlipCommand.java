@@ -29,8 +29,6 @@ public class BlipCommand implements StackCommand {
             Sound.Source.MASTER, 1f, 1f);
     private static final String DEAF = "commands.blip.deafened";
     private static final String SILENCED = "commands.blip.silenced";
-    private static final String BLOCKED_OTHER = "commands.blip.blocked_other";
-    private static final String BLOCKED_SELF = "commands.blip.blocked_self";
 
     @Override
     public void register() {
@@ -44,7 +42,6 @@ public class BlipCommand implements StackCommand {
 
     public void executePlayer(Player player, Object[] args) throws WrapperCommandSyntaxException {
         var profile = StackPun.api().profileManager().get(player);
-        var pl = (Player) args[0];
 
         // 检查玩家是否被禁言
         if (profile.isMuted()) {
@@ -52,17 +49,8 @@ public class BlipCommand implements StackCommand {
             StackCommand.failLoc(StackCommand.MESSAGE_MUTED);
         }
 
-        if (profile.blockedPlayers().contains(pl.getUniqueId())) {
-            StackCommand.failLoc(BLOCKED_OTHER);
-        }
-
         if (profile.isSilenced()) {
             StackCommand.failLoc(SILENCED);
-        }
-
-        var pf = StackPun.api().profileManager().get(pl);
-        if (pf.blockedPlayers().contains(player.getUniqueId())) {
-            StackCommand.failLoc(BLOCKED_SELF);
         }
 
         execute(player, args);

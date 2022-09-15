@@ -102,7 +102,10 @@ public class PlayerProfile implements Serializable {
 
     /**
      * A list of all blocked players.
+     *
+     * @deprecated This no longer works as intended to be.
      */
+    @Deprecated(forRemoval = false, since = "0.1.4-alpha")
     public List<UUID> blockedPlayers() {
         return blockedPlayers;
     }

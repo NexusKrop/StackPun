@@ -54,29 +54,31 @@ public final class PlayerManager implements Listener, IReloadable {
      * @param source  The source of the message.
      * @param target  The target of the message.
      * @param message The message.
+     * @deprecated In favour of {@link x.nexuskrop.stackpun.services.StackChatRenderer}
      */
+    @Deprecated(since = "0.1.4", forRemoval = true)
     public void sendChatMessage(Player source, Player target, Component message) {
         if (source == target) return;
-
-        var profile = StackPun.api().profileManager().get(source);
+        
         var selfProfile = StackPun.api().profileManager().get(target);
 
         // 是否没有被拉黑，接收者也没有deafened
-        if (selfProfile.chatVisibility() == ClientOption.ChatVisibility.FULL && !selfProfile.isDeafened() && !profile.blockedPlayers().contains(target.getUniqueId())
-                && !selfProfile.blockedPlayers().contains(source.getUniqueId())) {
+        if (selfProfile.chatVisibility() == ClientOption.ChatVisibility.FULL && !selfProfile.isDeafened()) {
             target.sendMessage(message);
         }
     }
 
+    /**
+     * @deprecated In favour of {@link x.nexuskrop.stackpun.services.StackChatRenderer}
+     */
+    @Deprecated(since = "0.1.4", forRemoval = true)
     public void sendIdentifiedMessage(Player source, Player target, Component message, Identity identity) {
         if (source == target) return;
 
-        var profile = StackPun.api().profileManager().get(source);
         var selfProfile = StackPun.api().profileManager().get(target);
 
         // 是否没有被拉黑，接收者也没有deafened
-        if (selfProfile.chatVisibility() == ClientOption.ChatVisibility.FULL && !selfProfile.isDeafened() && !profile.blockedPlayers().contains(target.getUniqueId())
-                && !selfProfile.blockedPlayers().contains(source.getUniqueId())) {
+        if (selfProfile.chatVisibility() == ClientOption.ChatVisibility.FULL && !selfProfile.isDeafened()) {
             target.sendMessage(identity, message);
         }
     }
