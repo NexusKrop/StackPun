@@ -37,7 +37,6 @@ import x.nexuskrop.stackpun.util.StackPunImpl;
 @Author("NexusKrop Project")
 @ApiVersion(ApiVersion.Target.v1_19)
 @Dependency("CommandAPI")
-@Dependency("ProtocolLib")
 @LogPrefix("StaP")
 public class StackPun extends JavaPlugin {
     private static StackPunImpl impl;
