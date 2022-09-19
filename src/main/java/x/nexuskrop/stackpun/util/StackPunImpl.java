@@ -14,7 +14,6 @@ import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
 import io.github.nexuskrop.stackpun.players.ChatManager;
 import io.github.nexuskrop.stackpun.players.PlayerManager;
 import x.nexuskrop.stackpun.commands.CommandManager;
-import x.nexuskrop.stackpun.net.NetworkManager;
 
 import java.io.File;
 
@@ -29,7 +28,6 @@ public class StackPunImpl implements IStackPun {
     private final ProfileManager profileManager;
     private final MessageManager messageManager;
     private final PlayerManager playerManager;
-    private final NetworkManager networkManager;
     private final ConfigManager configManager;
 
     /**
@@ -43,7 +41,6 @@ public class StackPunImpl implements IStackPun {
         profileManager = new ProfileManager(plugin.getSLF4JLogger());
         messageManager = new MessageManager(new File(plugin.getDataFolder(), "msg.properties"), plugin.getSLF4JLogger());
         playerManager = new PlayerManager(plugin.getSLF4JLogger());
-        networkManager = new NetworkManager(plugin.getSLF4JLogger());
         configManager = new ConfigManager(plugin);
     }
 
@@ -86,11 +83,6 @@ public class StackPunImpl implements IStackPun {
     @Override
     public PlayerManager playerManager() {
         return playerManager;
-    }
-
-    @Override
-    public NetworkManager networkManager() {
-        return networkManager;
     }
 
     @Override

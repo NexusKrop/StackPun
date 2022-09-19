@@ -20,6 +20,7 @@ import org.bukkit.plugin.java.annotation.plugin.Plugin;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import org.jetbrains.annotations.NotNull;
 import x.nexuskrop.stackpun.event.InventoryListener;
+import x.nexuskrop.stackpun.event.WorldListener;
 import x.nexuskrop.stackpun.net.StatusListener;
 import x.nexuskrop.stackpun.util.StackPunImpl;
 
@@ -87,6 +88,10 @@ public class StackPun extends JavaPlugin {
         impl.configManager().addMonitored(listener);
         getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         getServer().getPluginManager().registerEvents(new GameEventsHandler(), this);
+
+        var worldListener = new WorldListener();
+        impl.configManager().addMonitored(worldListener);
+        getServer().getPluginManager().registerEvents(worldListener, this);
     }
 
     /**
@@ -102,7 +107,6 @@ public class StackPun extends JavaPlugin {
                 SpawnCommand.class,
                 SetSpawnCommand.class,
                 WhoAmICommand.class,
-                IgnoreCommand.class,
                 DeafenCommand.class,
                 SilenceCommand.class,
                 StackPunCommand.class);

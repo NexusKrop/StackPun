@@ -13,7 +13,6 @@ import io.github.nexuskrop.stackpun.frontend.locale.MessageManager;
 import io.github.nexuskrop.stackpun.players.ChatManager;
 import io.github.nexuskrop.stackpun.players.PlayerManager;
 import x.nexuskrop.stackpun.commands.CommandManager;
-import x.nexuskrop.stackpun.net.NetworkManager;
 
 /**
  * Represents the API interface for StackPun plugin.
@@ -57,8 +56,6 @@ public interface IStackPun {
      * @return An instance of {@link PlayerManager}. Will always return the same instance.
      */
     PlayerManager playerManager();
-
-    NetworkManager networkManager();
 
     ConfigManager configManager();
 }
