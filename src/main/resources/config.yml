@@ -5,3 +5,5 @@ chat:
 version: 2.1
 server-list:
   motd: '<red>StackPun</red> <green>Test Server</green>'
+prohibited-blocks:
+  - 'minecraft:sculk_shrieker'
